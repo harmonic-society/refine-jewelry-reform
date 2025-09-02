@@ -48,7 +48,27 @@ jobs:
           echo "Starting deployment..."
           ssh -i ~/.ssh/deploy_key -p $PORT $USER@$HOST << 'EOF'
             set -e
-            cd /home/wp629555/refine-jewelry-reform.com/public_html/wp-content/themes/refine-jewelry-reform
-            git pull origin main
+            THEME_DIR="/home/wp629555/refine-jewelry-reform.com/public_html/wp-content/themes/refine-jewelry-reform"
+            
+            # ディレクトリが存在しない場合は作成
+            mkdir -p "$THEME_DIR"
+            cd "$THEME_DIR"
+            
+            # Gitリポジトリが存在するかチェック
+            if [ ! -d ".git" ]; then
+              echo "Initializing new repository..."
+              # 既存ファイルがある場合は一旦退避
+              if [ "$(ls -A)" ]; then
+                echo "Backing up existing files..."
+                mkdir -p ../refine-jewelry-reform-backup
+                mv * ../refine-jewelry-reform-backup/ 2>/dev/null || true
+              fi
+              # リポジトリをクローン
+              git clone https://github.com/harmonic-society/refine-jewelry-reform.git .
+            else
+              echo "Pulling latest changes..."
+              git pull origin main
+            fi
+            
             echo "Deployed at $(date)"
           EOF
