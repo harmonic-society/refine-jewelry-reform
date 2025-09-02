@@ -56,88 +56,25 @@ jobs:
             
             # Gitリポジトリが存在するかチェック
             if [ ! -d ".git" ]; then
-              echo "Initializing new repository..."
+              echo "Cloning repository..."
               # 既存ファイルがある場合は一旦退避
               if [ "$(ls -A)" ]; then
                 echo "Backing up existing files..."
                 mkdir -p ../refine-jewelry-reform-backup
                 mv * ../refine-jewelry-reform-backup/ 2>/dev/null || true
               fi
-              
-              # 方法1: wgetまたはcurlでアーカイブをダウンロード
-              echo "Downloading repository archive..."
-              
-              # 一時ディレクトリを作成
-              TEMP_DIR="/tmp/repo_extract_$$"
-              mkdir -p "$TEMP_DIR"
-              
-              if command -v wget &> /dev/null; then
-                echo "Using wget to download..."
-                wget https://github.com/harmonic-society/refine-jewelry-reform/archive/refs/heads/main.tar.gz -O /tmp/repo.tar.gz || exit 1
-              elif command -v curl &> /dev/null; then
-                echo "Using curl to download..."
-                curl -L https://github.com/harmonic-society/refine-jewelry-reform/archive/refs/heads/main.tar.gz -o /tmp/repo.tar.gz || exit 1
-              else
-                echo "Error: Neither wget nor curl is available"
-                exit 1
-              fi
-              
-              # アーカイブを一時ディレクトリに展開
-              echo "Extracting archive..."
-              tar -xzf /tmp/repo.tar.gz -C "$TEMP_DIR" || exit 1
-              
-              # ファイルをコピー
-              echo "Copying files..."
-              cp -r "$TEMP_DIR"/refine-jewelry-reform-main/* . 2>/dev/null || cp -r "$TEMP_DIR"/*/* . 2>/dev/null
-              
-              # クリーンアップ
-              rm -rf "$TEMP_DIR" /tmp/repo.tar.gz
-              
-              echo "Repository downloaded and extracted successfully"
-              echo "Files in directory:"
-              ls -la
-              
-              # Gitリポジトリとして初期化
-              git init
-              git remote add origin https://github.com/harmonic-society/refine-jewelry-reform.git
-              git add .
-              git commit -m "Initial deployment from GitHub archive"
-              git branch -M main
+              # リポジトリをクローン
+              git clone https://github.com/harmonic-society/refine-jewelry-reform.git .
+              echo "Repository cloned successfully"
             else
-              echo "Updating repository..."
-              # 既存のリポジトリがある場合も、アーカイブをダウンロードして更新
-              echo "Downloading latest repository archive..."
-              
-              # 一時ディレクトリを作成してダウンロード
-              TEMP_DIR="/tmp/repo_extract_$$"
-              mkdir -p "$TEMP_DIR"
-              
-              if command -v wget &> /dev/null; then
-                echo "Using wget to download..."
-                wget https://github.com/harmonic-society/refine-jewelry-reform/archive/refs/heads/main.tar.gz -O /tmp/repo.tar.gz || exit 1
-              elif command -v curl &> /dev/null; then
-                echo "Using curl to download..."
-                curl -L https://github.com/harmonic-society/refine-jewelry-reform/archive/refs/heads/main.tar.gz -o /tmp/repo.tar.gz || exit 1
-              else
-                echo "Error: Neither wget nor curl is available"
-                exit 1
-              fi
-              
-              # アーカイブを一時ディレクトリに展開
-              echo "Extracting archive..."
-              tar -xzf /tmp/repo.tar.gz -C "$TEMP_DIR" || exit 1
-              
-              # .gitディレクトリを保持しつつ、ファイルをコピー
-              echo "Copying files..."
-              cp -r "$TEMP_DIR"/refine-jewelry-reform-main/* . 2>/dev/null || cp -r "$TEMP_DIR"/*/* . 2>/dev/null
-              
-              # クリーンアップ
-              rm -rf "$TEMP_DIR" /tmp/repo.tar.gz
-              
+              echo "Pulling latest changes..."
+              git pull origin main
               echo "Repository updated successfully"
-              echo "Files in directory:"
-              ls -la
             fi
+            
+            # ファイル確認
+            echo "Files in directory:"
+            ls -la
             
             echo "Deployed at $(date)"
           EOF
