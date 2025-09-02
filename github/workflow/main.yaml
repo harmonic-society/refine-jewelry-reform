@@ -1,0 +1,54 @@
+name: Deploy
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup SSH and Deploy
+        env:
+          PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          HOST: ${{ secrets.HOST }}
+          USER: ${{ secrets.USERNAME }}
+          PORT: ${{ secrets.SSH_PORT || '10022' }}  # デフォルト値を設定
+        run: |
+          # デバッグ情報
+          echo "Connecting to $USER@$HOST:$PORT"
+          
+          # ポート番号の確認
+          if [ -z "$PORT" ]; then
+            echo "Error: PORT is not set!"
+            exit 1
+          fi
+          
+          # SSH設定
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          
+          # 秘密鍵を書き出す
+          echo "$PRIVATE_KEY" | tr -d '\r' > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          
+          # 鍵の確認
+          echo "Key info:"
+          ssh-keygen -y -f ~/.ssh/deploy_key > /dev/null && echo "Key is valid" || echo "Key is invalid"
+          
+          # known_hosts設定
+          ssh-keyscan -p $PORT -H $HOST >> ~/.ssh/known_hosts 2>/dev/null
+          
+          # SSH接続テスト
+          echo "Testing SSH connection..."
+          ssh -i ~/.ssh/deploy_key -p $PORT -o ConnectTimeout=10 $USER@$HOST "echo 'Connected successfully'"
+          
+          # デプロイ実行
+          echo "Starting deployment..."
+          ssh -i ~/.ssh/deploy_key -p $PORT $USER@$HOST << 'EOF'
+            set -e
+            cd /home/wp629555/refine-jewelry-reform.com/public_html/wp-content/themes/refine-jewelry-reform
+            git pull origin main
+            echo "Deployed at $(date)"
+          EOF
