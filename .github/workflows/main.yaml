@@ -63,19 +63,35 @@ jobs:
                 mkdir -p ../refine-jewelry-reform-backup
                 mv * ../refine-jewelry-reform-backup/ 2>/dev/null || true
               fi
-              # Git設定（認証プロンプトを無効化）
-              export GIT_TERMINAL_PROMPT=0
-              # リポジトリをクローン（パブリックリポジトリ用）
-              git clone https://github.com/harmonic-society/refine-jewelry-reform.git . 2>/dev/null || \
-              git clone git://github.com/harmonic-society/refine-jewelry-reform.git . 2>/dev/null || \
-              (echo "Using init and pull method..." && \
-               git init && \
-               git remote add origin https://github.com/harmonic-society/refine-jewelry-reform.git && \
-               git fetch origin main && \
-               git checkout -b main origin/main)
+              
+              # 方法1: wgetまたはcurlでアーカイブをダウンロード
+              echo "Downloading repository archive..."
+              if command -v wget &> /dev/null; then
+                wget -q https://github.com/harmonic-society/refine-jewelry-reform/archive/refs/heads/main.tar.gz -O /tmp/repo.tar.gz && \
+                tar -xzf /tmp/repo.tar.gz --strip-components=1 && \
+                rm /tmp/repo.tar.gz && \
+                echo "Repository downloaded and extracted successfully"
+              elif command -v curl &> /dev/null; then
+                curl -sL https://github.com/harmonic-society/refine-jewelry-reform/archive/refs/heads/main.tar.gz -o /tmp/repo.tar.gz && \
+                tar -xzf /tmp/repo.tar.gz --strip-components=1 && \
+                rm /tmp/repo.tar.gz && \
+                echo "Repository downloaded and extracted successfully"
+              else
+                echo "Error: Neither wget nor curl is available"
+                exit 1
+              fi
+              
+              # Gitリポジトリとして初期化
+              git init
+              git remote add origin https://github.com/harmonic-society/refine-jewelry-reform.git
+              git add .
+              git commit -m "Initial deployment from GitHub archive"
+              git branch -M main
             else
               echo "Pulling latest changes..."
-              git pull origin main
+              # 既存のリポジトリがある場合は、fetchとresetで強制更新
+              git fetch https://github.com/harmonic-society/refine-jewelry-reform.git main:refs/remotes/origin/main
+              git reset --hard origin/main
             fi
             
             echo "Deployed at $(date)"
