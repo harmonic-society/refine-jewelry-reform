@@ -88,10 +88,23 @@ jobs:
               git commit -m "Initial deployment from GitHub archive"
               git branch -M main
             else
-              echo "Pulling latest changes..."
-              # 既存のリポジトリがある場合は、fetchとresetで強制更新
-              git fetch https://github.com/harmonic-society/refine-jewelry-reform.git main:refs/remotes/origin/main
-              git reset --hard origin/main
+              echo "Updating repository..."
+              # 既存のリポジトリがある場合も、アーカイブをダウンロードして更新
+              echo "Downloading latest repository archive..."
+              if command -v wget &> /dev/null; then
+                wget -q https://github.com/harmonic-society/refine-jewelry-reform/archive/refs/heads/main.tar.gz -O /tmp/repo.tar.gz && \
+                tar -xzf /tmp/repo.tar.gz --strip-components=1 && \
+                rm /tmp/repo.tar.gz && \
+                echo "Repository updated successfully"
+              elif command -v curl &> /dev/null; then
+                curl -sL https://github.com/harmonic-society/refine-jewelry-reform/archive/refs/heads/main.tar.gz -o /tmp/repo.tar.gz && \
+                tar -xzf /tmp/repo.tar.gz --strip-components=1 && \
+                rm /tmp/repo.tar.gz && \
+                echo "Repository updated successfully"
+              else
+                echo "Error: Neither wget nor curl is available"
+                exit 1
+              fi
             fi
             
             echo "Deployed at $(date)"
