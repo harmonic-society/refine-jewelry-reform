@@ -41,13 +41,11 @@ get_header(); ?>
             <div class="products-grid grid">
                 <?php while (have_posts()) : the_post(); ?>
                     <article class="product-card card">
-                        <?php if (has_post_thumbnail()) : ?>
-                            <div class="product-image">
-                                <a href="<?php the_permalink(); ?>">
-                                    <?php the_post_thumbnail('product-thumbnail'); ?>
-                                </a>
-                            </div>
-                        <?php endif; ?>
+                        <div class="product-image">
+                            <a href="<?php the_permalink(); ?>">
+                                <?php echo refine_jewelry_get_product_image(get_the_ID(), 'product-thumbnail'); ?>
+                            </a>
+                        </div>
                         
                         <div class="product-content">
                             <h2 class="product-title">

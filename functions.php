@@ -318,3 +318,92 @@ function refine_jewelry_import_xml_data() {
     }
     return false;
 }
+
+// Custom function to get product image with fallback
+function refine_jewelry_get_product_image($post_id = null, $size = 'medium') {
+    if (!$post_id) {
+        $post_id = get_the_ID();
+    }
+    
+    // Try to get featured image
+    if (has_post_thumbnail($post_id)) {
+        return get_the_post_thumbnail($post_id, $size, array('class' => 'product-image'));
+    }
+    
+    // Try to get before/after images from meta
+    $before_image_id = get_post_meta($post_id, '_before_image', true);
+    $after_image_id = get_post_meta($post_id, '_after_image', true);
+    
+    if ($after_image_id && wp_attachment_is_image($after_image_id)) {
+        return wp_get_attachment_image($after_image_id, $size, false, array('class' => 'product-image'));
+    }
+    
+    if ($before_image_id && wp_attachment_is_image($before_image_id)) {
+        return wp_get_attachment_image($before_image_id, $size, false, array('class' => 'product-image'));
+    }
+    
+    // Return placeholder image
+    $placeholder_url = 'https://via.placeholder.com/400x400/f0f0f0/999999?text=' . urlencode('ジュエリー画像');
+    return '<img src="' . $placeholder_url . '" alt="' . get_the_title($post_id) . '" class="product-image placeholder" />';
+}
+
+// Filter to handle missing images
+function refine_jewelry_fix_image_urls($content) {
+    // Replace broken image URLs with placeholder
+    $content = preg_replace_callback(
+        '/<img[^>]+src=["\']([^"\']+)["\'][^>]*>/i',
+        function($matches) {
+            $img_tag = $matches[0];
+            $img_url = $matches[1];
+            
+            // Check if it's an old URL from the original site
+            if (strpos($img_url, 'refine-jewelry-reform.com/wp-content/uploads') !== false) {
+                // Extract filename
+                $filename = basename($img_url);
+                // Try to find attachment by filename
+                global $wpdb;
+                $attachment = $wpdb->get_var($wpdb->prepare(
+                    "SELECT ID FROM $wpdb->posts WHERE guid LIKE %s AND post_type = 'attachment' LIMIT 1",
+                    '%' . $filename
+                ));
+                
+                if ($attachment) {
+                    $new_url = wp_get_attachment_url($attachment);
+                    if ($new_url) {
+                        return str_replace($img_url, $new_url, $img_tag);
+                    }
+                }
+                
+                // If not found, use placeholder
+                $placeholder = 'https://via.placeholder.com/400x400/f0f0f0/999999?text=' . urlencode('画像準備中');
+                return str_replace($img_url, $placeholder, $img_tag);
+            }
+            
+            return $img_tag;
+        },
+        $content
+    );
+    
+    return $content;
+}
+add_filter('the_content', 'refine_jewelry_fix_image_urls');
+
+// Add support for external images as featured images
+function refine_jewelry_external_featured_image($html, $post_id, $post_thumbnail_id, $size, $attr) {
+    if (empty($html)) {
+        // Try to get the first image from content
+        $post = get_post($post_id);
+        if ($post && $post->post_content) {
+            preg_match('/<img[^>]+src=["\']([^"\']+)["\'][^>]*>/i', $post->post_content, $matches);
+            if (!empty($matches[1])) {
+                $classes = 'attachment-' . $size . ' size-' . $size . ' wp-post-image';
+                if (!empty($attr['class'])) {
+                    $classes .= ' ' . $attr['class'];
+                }
+                $html = '<img src="' . esc_url($matches[1]) . '" class="' . esc_attr($classes) . '" alt="' . esc_attr(get_the_title($post_id)) . '" />';
+            }
+        }
+    }
+    return $html;
+}
+add_filter('post_thumbnail_html', 'refine_jewelry_external_featured_image', 10, 5);

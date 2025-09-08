@@ -15,11 +15,9 @@ get_header(); ?>
                 </header>
 
                 <div class="product-images">
-                    <?php if (has_post_thumbnail()) : ?>
-                        <div class="product-main-image">
-                            <?php the_post_thumbnail('product-large'); ?>
-                        </div>
-                    <?php endif; ?>
+                    <div class="product-main-image">
+                        <?php echo refine_jewelry_get_product_image(get_the_ID(), 'product-large'); ?>
+                    </div>
                     
                     <?php
                     // Get before/after images if they exist
@@ -32,14 +30,26 @@ get_header(); ?>
                             <?php if ($before_image_id) : ?>
                                 <div class="before-image card">
                                     <h3>リフォーム前</h3>
-                                    <?php echo wp_get_attachment_image($before_image_id, 'product-thumbnail'); ?>
+                                    <?php 
+                                    if (wp_attachment_is_image($before_image_id)) {
+                                        echo wp_get_attachment_image($before_image_id, 'product-thumbnail');
+                                    } else {
+                                        echo '<img src="https://via.placeholder.com/400x400/f0f0f0/999999?text=' . urlencode('リフォーム前') . '" alt="リフォーム前" />';
+                                    }
+                                    ?>
                                 </div>
                             <?php endif; ?>
                             
                             <?php if ($after_image_id) : ?>
                                 <div class="after-image card">
                                     <h3>リフォーム後</h3>
-                                    <?php echo wp_get_attachment_image($after_image_id, 'product-thumbnail'); ?>
+                                    <?php 
+                                    if (wp_attachment_is_image($after_image_id)) {
+                                        echo wp_get_attachment_image($after_image_id, 'product-thumbnail');
+                                    } else {
+                                        echo '<img src="https://via.placeholder.com/400x400/f0f0f0/999999?text=' . urlencode('リフォーム後') . '" alt="リフォーム後" />';
+                                    }
+                                    ?>
                                 </div>
                             <?php endif; ?>
                         </div>

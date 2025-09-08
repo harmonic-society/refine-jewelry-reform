@@ -57,11 +57,9 @@ get_header(); ?>
                     <div class="grid">
                         <?php while ($recent_products->have_posts()) : $recent_products->the_post(); ?>
                             <article class="card">
-                                <?php if (has_post_thumbnail()) : ?>
-                                    <div class="product-image">
-                                        <?php the_post_thumbnail('medium'); ?>
-                                    </div>
-                                <?php endif; ?>
+                                <div class="product-image">
+                                    <?php echo refine_jewelry_get_product_image(get_the_ID(), 'medium'); ?>
+                                </div>
                                 <h3><?php the_title(); ?></h3>
                                 <?php the_excerpt(); ?>
                                 <a href="<?php the_permalink(); ?>" class="btn">詳細を見る</a>
