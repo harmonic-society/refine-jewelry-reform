@@ -57,7 +57,7 @@ function refine_jewelry_register_products_cpt() {
     $args = array(
         'label' => __('商品', 'refine-jewelry-reform'),
         'labels' => $labels,
-        'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
+        'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields', 'author', 'revisions'),
         'hierarchical' => false,
         'public' => true,
         'show_ui' => true,
@@ -107,7 +107,7 @@ function refine_jewelry_register_voice_cpt() {
     $args = array(
         'label' => __('お客様の声', 'refine-jewelry-reform'),
         'labels' => $labels,
-        'supports' => array('title', 'editor', 'thumbnail', 'excerpt'),
+        'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'author', 'revisions'),
         'hierarchical' => false,
         'public' => true,
         'show_ui' => true,
@@ -147,7 +147,7 @@ function refine_jewelry_register_ml_slider_cpt() {
     $args = array(
         'label' => __('スライダー', 'refine-jewelry-reform'),
         'labels' => $labels,
-        'supports' => array('title', 'editor'),
+        'supports' => array('title', 'editor', 'author', 'revisions'),
         'hierarchical' => false,
         'public' => false,
         'show_ui' => true,
@@ -188,7 +188,7 @@ function refine_jewelry_register_trust_form_cpt() {
     $args = array(
         'label' => __('お問い合わせ履歴', 'refine-jewelry-reform'),
         'labels' => $labels,
-        'supports' => array('title', 'editor', 'custom-fields'),
+        'supports' => array('title', 'editor', 'custom-fields', 'author', 'revisions'),
         'hierarchical' => false,
         'public' => false,
         'show_ui' => true,
