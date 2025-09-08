@@ -426,50 +426,68 @@ function refine_jewelry_get_product_image($post_id = null, $size = 'medium') {
     return '<img src="' . $placeholder_url . '" alt="' . get_the_title($post_id) . '" class="product-image placeholder" />';
 }
 
-// Filter to handle missing images
+// Filter to handle missing images and fix old URLs
 function refine_jewelry_fix_image_urls($content) {
-    // Replace broken image URLs with placeholder
+    // Handle both image tags and anchor tags
     $content = preg_replace_callback(
-        '/<img[^>]+src=["\']([^"\']+)["\'][^>]*>/i',
+        '/<(img|a)([^>]+)(src|href)=["\']([^"\']+)["\']([^>]*)>/i',
         function($matches) {
-            $img_tag = $matches[0];
-            $img_url = $matches[1];
+            $tag = $matches[0];
+            $tag_name = $matches[1];
+            $attr_before = $matches[2];
+            $attr_name = $matches[3];
+            $url = $matches[4];
+            $attr_after = $matches[5];
             
-            // Check if it's an old URL from the original site
-            if (strpos($img_url, 'refine-jewelry-reform.com/wp-content/uploads') !== false) {
-                // Extract filename
-                $filename = basename($img_url);
-                // Try to find attachment by filename
-                global $wpdb;
-                $attachment = $wpdb->get_var($wpdb->prepare(
-                    "SELECT ID FROM $wpdb->posts WHERE guid LIKE %s AND post_type = 'attachment' LIMIT 1",
-                    '%' . $filename
-                ));
-                
-                if ($attachment) {
-                    $new_url = wp_get_attachment_url($attachment);
-                    if ($new_url) {
-                        // Make URL protocol-relative
-                        $new_url = str_replace(array('https://', 'http://'), '//', $new_url);
-                        return str_replace($img_url, $new_url, $img_tag);
+            // Check if URL is from refine-jewelry-reform.com
+            if (strpos($url, 'refine-jewelry-reform.com') !== false) {
+                // Check if it's an upload URL
+                if (strpos($url, '/wp-content/uploads/') !== false) {
+                    // Extract path after uploads/
+                    preg_match('/\/wp-content\/uploads\/(.+)$/i', $url, $path_matches);
+                    if (!empty($path_matches[1])) {
+                        // Check if file exists
+                        $upload_dir = wp_upload_dir();
+                        $file_path = $upload_dir['basedir'] . '/' . $path_matches[1];
+                        
+                        if (file_exists($file_path)) {
+                            // File exists, use current site URL
+                            $new_url = $upload_dir['baseurl'] . '/' . $path_matches[1];
+                            return "<{$tag_name}{$attr_before}{$attr_name}=\"{$new_url}\"{$attr_after}>";
+                        } else {
+                            // Try to find by filename in database
+                            $filename = basename($url);
+                            global $wpdb;
+                            $attachment = $wpdb->get_var($wpdb->prepare(
+                                "SELECT ID FROM $wpdb->posts WHERE guid LIKE %s AND post_type = 'attachment' LIMIT 1",
+                                '%' . $filename
+                            ));
+                            
+                            if ($attachment) {
+                                $new_url = wp_get_attachment_url($attachment);
+                                if ($new_url) {
+                                    return "<{$tag_name}{$attr_before}{$attr_name}=\"{$new_url}\"{$attr_after}>";
+                                }
+                            }
+                            
+                            // For images, use placeholder
+                            if ($tag_name === 'img') {
+                                $placeholder = '//via.placeholder.com/400x400/f0f0f0/999999?text=' . urlencode('画像準備中');
+                                return "<img{$attr_before}src=\"{$placeholder}\"{$attr_after}>";
+                            }
+                        }
                     }
                 }
-                
-                // If not found, use placeholder with protocol-relative URL
-                $placeholder = '//via.placeholder.com/400x400/f0f0f0/999999?text=' . urlencode('画像準備中');
-                return str_replace($img_url, $placeholder, $img_tag);
             }
             
-            // Make all image URLs protocol-relative
-            $img_tag = str_replace(array('https://', 'http://'), '//', $img_tag);
-            return $img_tag;
+            return $tag;
         },
         $content
     );
     
     return $content;
 }
-add_filter('the_content', 'refine_jewelry_fix_image_urls');
+add_filter('the_content', 'refine_jewelry_fix_image_urls', 5);  // Run early with priority 5
 
 // Fix image placeholders in content
 function refine_jewelry_fix_image_placeholders($content) {
