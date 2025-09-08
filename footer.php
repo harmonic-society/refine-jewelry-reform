@@ -4,7 +4,7 @@
             <!-- Brand Section -->
             <div class="footer-brand">
                 <h3>REFINE JEWELRY REFORM</h3>
-                <p>東京都 池袋・大塚・埼玉県浦和・神奈川県横浜・若葉台・川崎の<br>ジュエリーリフォーム・リメイク・修理専門店</p>
+                <p>東京都 池袋・大塚・中野・神奈川県横浜若葉台の<br>ジュエリーリフォーム・リメイク・修理専門店</p>
                 <div class="footer-contact">
                     <p class="footer-tel">
                         <strong>フリーダイアル</strong><br>
@@ -27,11 +27,7 @@
                 <ul>
                     <li><a href="<?php echo esc_url(home_url('/shop/ikebukuro/')); ?>">池袋大塚店</a></li>
                     <li><a href="<?php echo esc_url(home_url('/shop/nakano/')); ?>">中野マルイ店</a></li>
-                    <li><a href="<?php echo esc_url(home_url('/shop/urawa/')); ?>">浦和店</a></li>
-                    <li><a href="<?php echo esc_url(home_url('/shop/yokohama/')); ?>">横浜店</a></li>
                     <li><a href="<?php echo esc_url(home_url('/shop/wakabadai/')); ?>">横浜若葉台店</a></li>
-                    <li><a href="<?php echo esc_url(home_url('/shop/kawasaki/')); ?>">川崎店</a></li>
-                    <li><a href="<?php echo esc_url(home_url('/shop/sakurashinmachi/')); ?>">世田谷桜新町店</a></li>
                 </ul>
             </div>
             

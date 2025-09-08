@@ -1,6 +1,6 @@
 <div class="shops-page">
     <div class="shops-intro">
-        <p class="lead">東京・埼玉・神奈川に展開する、ジュエリー工房リファインの店舗をご紹介します。</p>
+        <p class="lead">東京・神奈川に展開する、ジュエリー工房リファインの店舗をご紹介します。</p>
     </div>
 
     <div class="shops-grid">
@@ -32,60 +32,6 @@
         </div>
 
         <div class="shop-card">
-            <h2>浦和店</h2>
-            <div class="shop-info">
-                <div class="info-item">
-                    <strong>住所:</strong>
-                    <p>〒330-0063<br>埼玉県さいたま市浦和区高砂2-XX-XX</p>
-                </div>
-                <div class="info-item">
-                    <strong>電話:</strong>
-                    <p>048-234-5678</p>
-                </div>
-                <div class="info-item">
-                    <strong>営業時間:</strong>
-                    <p>10:00～19:00</p>
-                </div>
-                <div class="info-item">
-                    <strong>定休日:</strong>
-                    <p>水曜日</p>
-                </div>
-                <div class="info-item">
-                    <strong>アクセス:</strong>
-                    <p>JR浦和駅西口より徒歩3分</p>
-                </div>
-            </div>
-            <a href="<?php echo home_url('/shop/urawa/'); ?>" class="btn btn-outline">詳細・地図を見る</a>
-        </div>
-
-        <div class="shop-card">
-            <h2>横浜店</h2>
-            <div class="shop-info">
-                <div class="info-item">
-                    <strong>住所:</strong>
-                    <p>〒220-0011<br>神奈川県横浜市西区高島2-XX-XX</p>
-                </div>
-                <div class="info-item">
-                    <strong>電話:</strong>
-                    <p>045-345-6789</p>
-                </div>
-                <div class="info-item">
-                    <strong>営業時間:</strong>
-                    <p>10:00～19:00</p>
-                </div>
-                <div class="info-item">
-                    <strong>定休日:</strong>
-                    <p>水曜日</p>
-                </div>
-                <div class="info-item">
-                    <strong>アクセス:</strong>
-                    <p>JR横浜駅東口より徒歩5分</p>
-                </div>
-            </div>
-            <a href="<?php echo home_url('/shop/yokohama/'); ?>" class="btn btn-outline">詳細・地図を見る</a>
-        </div>
-
-        <div class="shop-card">
             <h2>横浜若葉台店</h2>
             <div class="shop-info">
                 <div class="info-item">
@@ -110,33 +56,6 @@
                 </div>
             </div>
             <a href="<?php echo home_url('/shop/wakabadai/'); ?>" class="btn btn-outline">詳細・地図を見る</a>
-        </div>
-
-        <div class="shop-card">
-            <h2>川崎店</h2>
-            <div class="shop-info">
-                <div class="info-item">
-                    <strong>住所:</strong>
-                    <p>〒210-0007<br>神奈川県川崎市川崎区駅前本町XX-XX</p>
-                </div>
-                <div class="info-item">
-                    <strong>電話:</strong>
-                    <p>044-456-7890</p>
-                </div>
-                <div class="info-item">
-                    <strong>営業時間:</strong>
-                    <p>10:00～19:00</p>
-                </div>
-                <div class="info-item">
-                    <strong>定休日:</strong>
-                    <p>水曜日</p>
-                </div>
-                <div class="info-item">
-                    <strong>アクセス:</strong>
-                    <p>JR川崎駅東口より徒歩5分</p>
-                </div>
-            </div>
-            <a href="<?php echo home_url('/shop/kawasaki/'); ?>" class="btn btn-outline">詳細・地図を見る</a>
         </div>
 
         <div class="shop-card">
@@ -170,32 +89,6 @@
             <a href="<?php echo home_url('/shop/nakano/'); ?>" class="btn btn-outline">詳細・地図を見る</a>
         </div>
 
-        <div class="shop-card">
-            <h2>世田谷桜新町店</h2>
-            <div class="shop-info">
-                <div class="info-item">
-                    <strong>住所:</strong>
-                    <p>〒154-0015<br>東京都世田谷区桜新町2-XX-XX</p>
-                </div>
-                <div class="info-item">
-                    <strong>電話:</strong>
-                    <p>03-5678-9012</p>
-                </div>
-                <div class="info-item">
-                    <strong>営業時間:</strong>
-                    <p>10:00～19:00</p>
-                </div>
-                <div class="info-item">
-                    <strong>定休日:</strong>
-                    <p>水曜日</p>
-                </div>
-                <div class="info-item">
-                    <strong>アクセス:</strong>
-                    <p>東急田園都市線桜新町駅より徒歩3分</p>
-                </div>
-            </div>
-            <a href="<?php echo home_url('/shop/sakurashinmachi/'); ?>" class="btn btn-outline">詳細・地図を見る</a>
-        </div>
     </div>
 
     <div class="shop-notes">
