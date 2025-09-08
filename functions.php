@@ -471,6 +471,61 @@ function refine_jewelry_fix_image_urls($content) {
 }
 add_filter('the_content', 'refine_jewelry_fix_image_urls');
 
+// Fix image placeholders in content
+function refine_jewelry_fix_image_placeholders($content) {
+    // Pattern to match [Image #X] placeholders
+    $pattern = '/\[Image #(\d+)\]/i';
+    
+    // Replace with actual images from media library
+    $content = preg_replace_callback($pattern, function($matches) {
+        global $post;
+        
+        // Try to get the first attached image
+        $attachments = get_posts(array(
+            'post_type' => 'attachment',
+            'posts_per_page' => -1,
+            'post_parent' => $post->ID,
+            'post_mime_type' => 'image',
+            'orderby' => 'menu_order',
+            'order' => 'ASC'
+        ));
+        
+        $image_index = intval($matches[1]) - 1;
+        
+        if (isset($attachments[$image_index])) {
+            // Get the image HTML
+            $image_html = wp_get_attachment_image($attachments[$image_index]->ID, 'large', false, array(
+                'class' => 'content-image',
+                'alt' => get_the_title($attachments[$image_index]->ID)
+            ));
+            return $image_html;
+        }
+        
+        // If no attachment found, try to get featured image
+        if ($image_index === 0 && has_post_thumbnail($post->ID)) {
+            return get_the_post_thumbnail($post->ID, 'large', array('class' => 'content-image'));
+        }
+        
+        // Return placeholder if no image found
+        return '<img src="//via.placeholder.com/600x400/f0f0f0/999999?text=' . urlencode('画像 #' . $matches[1]) . '" alt="Image ' . $matches[1] . '" class="content-image placeholder" />';
+    }, $content);
+    
+    // Also handle [img] shortcode if present
+    $content = preg_replace_callback('/\[img\s*(?:id=["\']?(\d+)["\']?)?\s*\]/i', function($matches) {
+        if (isset($matches[1])) {
+            $attachment_id = intval($matches[1]);
+            if (wp_attachment_is_image($attachment_id)) {
+                return wp_get_attachment_image($attachment_id, 'large', false, array('class' => 'content-image'));
+            }
+        }
+        return '';
+    }, $content);
+    
+    return $content;
+}
+add_filter('the_content', 'refine_jewelry_fix_image_placeholders', 9);
+add_filter('the_excerpt', 'refine_jewelry_fix_image_placeholders', 9);
+
 // Add support for external images as featured images
 function refine_jewelry_external_featured_image($html, $post_id, $post_thumbnail_id, $size, $attr) {
     if (empty($html)) {
@@ -797,8 +852,25 @@ function refine_jewelry_classic_editor_settings() {
             add_filter('gutenberg_can_edit_post_type', '__return_false', 10);
         }
     }
+    
+    // Ensure media buttons are available in Classic Editor
+    add_filter('user_can_richedit', '__return_true');
+    
+    // Add media button support for custom post types
+    add_post_type_support('products', 'editor');
+    add_post_type_support('voice', 'editor');
+    add_post_type_support('ml-slider', 'editor');
+    add_post_type_support('trust-form', 'editor');
 }
 add_action('admin_init', 'refine_jewelry_classic_editor_settings');
+
+// Enable WordPress media uploader for all editors
+function refine_jewelry_enable_media_uploader() {
+    if (is_admin()) {
+        wp_enqueue_media();
+    }
+}
+add_action('admin_enqueue_scripts', 'refine_jewelry_enable_media_uploader');
 
 // Ensure products post type works with REST API (for future use)
 function refine_jewelry_fix_products_rest() {
