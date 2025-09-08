@@ -164,7 +164,7 @@ get_header(); ?>
                                 </div>
                             <?php endif; ?>
                             
-                            <a href="<?php the_permalink(); ?>" class="btn btn-primary">詳細を見る</a>
+                            <a href="<?php the_permalink(); ?>" class="btn btn-primary" style="position: relative; z-index: 10;">詳細を見る</a>
                         </div>
                     </article>
                 <?php endwhile; ?>
@@ -332,10 +332,12 @@ get_header(); ?>
     justify-content: center;
     opacity: 0;
     transition: opacity var(--transition-normal);
+    pointer-events: none;
 }
 
 .product-card:hover .product-overlay {
     opacity: 1;
+    pointer-events: auto;
 }
 
 .view-detail {
@@ -345,6 +347,7 @@ get_header(); ?>
     padding: 0.75rem 1.5rem;
     border: 2px solid var(--color-white);
     border-radius: 25px;
+    pointer-events: none;
 }
 
 .product-code {
@@ -361,6 +364,8 @@ get_header(); ?>
 
 .product-content {
     padding: var(--spacing-lg);
+    position: relative;
+    z-index: 1;
 }
 
 .product-title {
@@ -372,6 +377,7 @@ get_header(); ?>
     color: var(--color-charcoal);
     text-decoration: none;
     transition: color var(--transition-normal);
+    display: block;
 }
 
 .product-title a:hover {

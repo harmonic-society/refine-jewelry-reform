@@ -71,12 +71,25 @@ function refine_jewelry_register_products_cpt() {
         'exclude_from_search' => false,
         'publicly_queryable' => true,
         'capability_type' => 'post',
-        'rewrite' => array('slug' => 'case'),
+        'rewrite' => array(
+            'slug' => 'case',
+            'with_front' => false,
+            'feeds' => true,
+            'pages' => true
+        ),
     );
     
     register_post_type('products', $args);
 }
 add_action('init', 'refine_jewelry_register_products_cpt', 0);
+
+// Flush rewrite rules on theme activation
+function refine_jewelry_rewrite_flush() {
+    refine_jewelry_register_products_cpt();
+    refine_jewelry_register_taxonomies();
+    flush_rewrite_rules();
+}
+add_action('after_switch_theme', 'refine_jewelry_rewrite_flush');
 
 // Register Custom Post Type: Voice (Customer Testimonials)
 function refine_jewelry_register_voice_cpt() {
@@ -105,7 +118,12 @@ function refine_jewelry_register_voice_cpt() {
         'exclude_from_search' => false,
         'publicly_queryable' => true,
         'capability_type' => 'post',
-        'rewrite' => array('slug' => 'voice'),
+        'rewrite' => array(
+            'slug' => 'voice',
+            'with_front' => false,
+            'feeds' => true,
+            'pages' => true
+        ),
     );
     
     register_post_type('voice', $args);
@@ -175,7 +193,12 @@ function refine_jewelry_register_trust_form_cpt() {
         'exclude_from_search' => true,
         'publicly_queryable' => false,
         'capability_type' => 'post',
-        'rewrite' => array('slug' => 'trust-form'),
+        'rewrite' => array(
+            'slug' => 'trust-form',
+            'with_front' => false,
+            'feeds' => false,
+            'pages' => false
+        ),
     );
     
     register_post_type('trust-form', $args);
@@ -199,7 +222,11 @@ function refine_jewelry_register_taxonomies() {
         'show_ui' => true,
         'show_admin_column' => true,
         'show_in_nav_menus' => true,
-        'rewrite' => array('slug' => 'before'),
+        'rewrite' => array(
+            'slug' => 'before',
+            'with_front' => false,
+            'feeds' => true
+        ),
     ));
     
     // After Categories (リフォーム後)
@@ -217,7 +244,11 @@ function refine_jewelry_register_taxonomies() {
         'show_ui' => true,
         'show_admin_column' => true,
         'show_in_nav_menus' => true,
-        'rewrite' => array('slug' => 'after'),
+        'rewrite' => array(
+            'slug' => 'after',
+            'with_front' => false,
+            'feeds' => true
+        ),
     ));
     
     // Type Categories (作業タイプ)
@@ -235,7 +266,11 @@ function refine_jewelry_register_taxonomies() {
         'show_ui' => true,
         'show_admin_column' => true,
         'show_in_nav_menus' => true,
-        'rewrite' => array('slug' => 'type'),
+        'rewrite' => array(
+            'slug' => 'type',
+            'with_front' => false,
+            'feeds' => true
+        ),
     ));
     
     // Stone Categories (石の種類)
@@ -253,7 +288,11 @@ function refine_jewelry_register_taxonomies() {
         'show_ui' => true,
         'show_admin_column' => true,
         'show_in_nav_menus' => true,
-        'rewrite' => array('slug' => 'stone'),
+        'rewrite' => array(
+            'slug' => 'stone',
+            'with_front' => false,
+            'feeds' => true
+        ),
     ));
     
     // Show Categories (表示設定)
@@ -271,7 +310,11 @@ function refine_jewelry_register_taxonomies() {
         'show_ui' => true,
         'show_admin_column' => true,
         'show_in_nav_menus' => true,
-        'rewrite' => array('slug' => 'show'),
+        'rewrite' => array(
+            'slug' => 'show',
+            'with_front' => false,
+            'feeds' => true
+        ),
     ));
     
     // ML Slider taxonomy
@@ -648,3 +691,34 @@ function refine_jewelry_save_trust_form_meta($post_id) {
     }
 }
 add_action('save_post_trust-form', 'refine_jewelry_save_trust_form_meta');
+
+// Force all content to use protocol-relative URLs
+function refine_jewelry_force_protocol_relative($content) {
+    // Replace both http:// and https:// with //
+    $content = str_replace(array('https://', 'http://'), '//', $content);
+    return $content;
+}
+add_filter('the_content', 'refine_jewelry_force_protocol_relative', 999);
+add_filter('wp_get_attachment_url', 'refine_jewelry_force_protocol_relative', 999);
+add_filter('wp_get_attachment_image_src', function($image) {
+    if (is_array($image)) {
+        $image[0] = str_replace(array('https://', 'http://'), '//', $image[0]);
+    }
+    return $image;
+}, 999);
+add_filter('wp_get_attachment_image_attributes', function($attr) {
+    if (isset($attr['src'])) {
+        $attr['src'] = str_replace(array('https://', 'http://'), '//', $attr['src']);
+    }
+    if (isset($attr['srcset'])) {
+        $attr['srcset'] = str_replace(array('https://', 'http://'), '//', $attr['srcset']);
+    }
+    return $attr;
+}, 999);
+// Manual permalink flush (call this once to fix permalinks)
+function refine_jewelry_manual_flush_rules() {
+    global $wp_rewrite;
+    $wp_rewrite->flush_rules();
+}
+// Uncomment the line below and load the site once, then comment it back
+// add_action('init', 'refine_jewelry_manual_flush_rules', 999);

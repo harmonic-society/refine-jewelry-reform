@@ -74,6 +74,8 @@ access_log
 *.zip
 *.bak
 *~
+refine.WordPress.2025-09-08.xml
+WordPress.2025-09-07.xml
 
 # Temporary files
 *.tmp
