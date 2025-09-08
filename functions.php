@@ -112,17 +112,79 @@ function refine_jewelry_register_voice_cpt() {
 }
 add_action('init', 'refine_jewelry_register_voice_cpt', 0);
 
+// Register Custom Post Type: ML Slider
+function refine_jewelry_register_ml_slider_cpt() {
+    $labels = array(
+        'name' => _x('スライダー', 'Post Type General Name', 'refine-jewelry-reform'),
+        'singular_name' => _x('スライダー', 'Post Type Singular Name', 'refine-jewelry-reform'),
+        'menu_name' => __('スライダー', 'refine-jewelry-reform'),
+    );
+    
+    $args = array(
+        'label' => __('スライダー', 'refine-jewelry-reform'),
+        'labels' => $labels,
+        'supports' => array('title', 'editor'),
+        'hierarchical' => false,
+        'public' => false,
+        'show_ui' => true,
+        'show_in_menu' => true,
+        'menu_position' => 20,
+        'menu_icon' => 'dashicons-images-alt2',
+        'show_in_admin_bar' => false,
+        'show_in_nav_menus' => false,
+        'can_export' => true,
+        'has_archive' => false,
+        'exclude_from_search' => true,
+        'publicly_queryable' => false,
+        'capability_type' => 'post',
+    );
+    
+    register_post_type('ml-slider', $args);
+}
+add_action('init', 'refine_jewelry_register_ml_slider_cpt', 0);
+
+// Register Custom Post Type: Trust Form
+function refine_jewelry_register_trust_form_cpt() {
+    $labels = array(
+        'name' => _x('お問い合わせ', 'Post Type General Name', 'refine-jewelry-reform'),
+        'singular_name' => _x('お問い合わせ', 'Post Type Singular Name', 'refine-jewelry-reform'),
+        'menu_name' => __('お問い合わせ', 'refine-jewelry-reform'),
+    );
+    
+    $args = array(
+        'label' => __('お問い合わせ', 'refine-jewelry-reform'),
+        'labels' => $labels,
+        'supports' => array('title', 'editor'),
+        'hierarchical' => false,
+        'public' => false,
+        'show_ui' => true,
+        'show_in_menu' => true,
+        'menu_position' => 21,
+        'menu_icon' => 'dashicons-email',
+        'show_in_admin_bar' => false,
+        'show_in_nav_menus' => false,
+        'can_export' => true,
+        'has_archive' => false,
+        'exclude_from_search' => true,
+        'publicly_queryable' => false,
+        'capability_type' => 'post',
+    );
+    
+    register_post_type('trust-form', $args);
+}
+add_action('init', 'refine_jewelry_register_trust_form_cpt', 0);
+
 // Register Custom Taxonomies
 function refine_jewelry_register_taxonomies() {
-    // Before Categories (for reform examples)
+    // Before Categories (リフォーム前)
     register_taxonomy('before', 'products', array(
         'labels' => array(
-            'name' => 'リフォーム前カテゴリー',
-            'singular_name' => 'リフォーム前カテゴリー',
+            'name' => 'リフォーム前',
+            'singular_name' => 'リフォーム前',
             'menu_name' => 'リフォーム前',
-            'all_items' => 'すべてのカテゴリー',
-            'edit_item' => 'カテゴリーを編集',
-            'add_new_item' => '新規カテゴリーを追加',
+            'all_items' => 'すべてのリフォーム前',
+            'edit_item' => '編集',
+            'add_new_item' => '新規追加',
         ),
         'hierarchical' => true,
         'public' => true,
@@ -130,6 +192,93 @@ function refine_jewelry_register_taxonomies() {
         'show_admin_column' => true,
         'show_in_nav_menus' => true,
         'rewrite' => array('slug' => 'before'),
+    ));
+    
+    // After Categories (リフォーム後)
+    register_taxonomy('after', 'products', array(
+        'labels' => array(
+            'name' => 'リフォーム後',
+            'singular_name' => 'リフォーム後',
+            'menu_name' => 'リフォーム後',
+            'all_items' => 'すべてのリフォーム後',
+            'edit_item' => '編集',
+            'add_new_item' => '新規追加',
+        ),
+        'hierarchical' => true,
+        'public' => true,
+        'show_ui' => true,
+        'show_admin_column' => true,
+        'show_in_nav_menus' => true,
+        'rewrite' => array('slug' => 'after'),
+    ));
+    
+    // Type Categories (作業タイプ)
+    register_taxonomy('type', 'products', array(
+        'labels' => array(
+            'name' => '作業タイプ',
+            'singular_name' => '作業タイプ',
+            'menu_name' => '作業タイプ',
+            'all_items' => 'すべての作業タイプ',
+            'edit_item' => '編集',
+            'add_new_item' => '新規追加',
+        ),
+        'hierarchical' => true,
+        'public' => true,
+        'show_ui' => true,
+        'show_admin_column' => true,
+        'show_in_nav_menus' => true,
+        'rewrite' => array('slug' => 'type'),
+    ));
+    
+    // Stone Categories (石の種類)
+    register_taxonomy('stone', 'products', array(
+        'labels' => array(
+            'name' => '石の種類',
+            'singular_name' => '石の種類',
+            'menu_name' => '石の種類',
+            'all_items' => 'すべての石',
+            'edit_item' => '編集',
+            'add_new_item' => '新規追加',
+        ),
+        'hierarchical' => true,
+        'public' => true,
+        'show_ui' => true,
+        'show_admin_column' => true,
+        'show_in_nav_menus' => true,
+        'rewrite' => array('slug' => 'stone'),
+    ));
+    
+    // Show Categories (表示設定)
+    register_taxonomy('show', 'products', array(
+        'labels' => array(
+            'name' => '表示設定',
+            'singular_name' => '表示設定',
+            'menu_name' => '表示設定',
+            'all_items' => 'すべての表示設定',
+            'edit_item' => '編集',
+            'add_new_item' => '新規追加',
+        ),
+        'hierarchical' => true,
+        'public' => true,
+        'show_ui' => true,
+        'show_admin_column' => true,
+        'show_in_nav_menus' => true,
+        'rewrite' => array('slug' => 'show'),
+    ));
+    
+    // ML Slider taxonomy
+    register_taxonomy('ml-slider', 'attachment', array(
+        'labels' => array(
+            'name' => 'スライダー',
+            'singular_name' => 'スライダー',
+            'menu_name' => 'スライダー',
+        ),
+        'hierarchical' => true,
+        'public' => false,
+        'show_ui' => false,
+        'show_admin_column' => false,
+        'show_in_nav_menus' => false,
+        'rewrite' => false,
     ));
 }
 add_action('init', 'refine_jewelry_register_taxonomies');
