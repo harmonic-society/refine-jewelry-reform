@@ -37,9 +37,37 @@ get_header(); ?>
             </div>
         <?php endif; ?>
 
-        <?php if (have_posts()) : ?>
+        <?php 
+        // カスタムクエリで商品を取得
+        $paged = get_query_var('paged') ? get_query_var('paged') : 1;
+        
+        // タクソノミーフィルタリング対応
+        $args = array(
+            'post_type' => 'products',
+            'posts_per_page' => 12,
+            'paged' => $paged,
+            'post_status' => 'publish',
+            'orderby' => 'date',
+            'order' => 'DESC'
+        );
+        
+        // タクソノミーページの場合はフィルタリング
+        if (is_tax()) {
+            $current_term = get_queried_object();
+            $args['tax_query'] = array(
+                array(
+                    'taxonomy' => $current_term->taxonomy,
+                    'field' => 'term_id',
+                    'terms' => $current_term->term_id,
+                )
+            );
+        }
+        
+        $products_query = new WP_Query($args);
+        
+        if ($products_query->have_posts()) : ?>
             <div class="products-grid grid">
-                <?php while (have_posts()) : the_post(); ?>
+                <?php while ($products_query->have_posts()) : $products_query->the_post(); ?>
                     <article class="product-card card">
                         <div class="product-image">
                             <a href="<?php the_permalink(); ?>">
@@ -63,7 +91,13 @@ get_header(); ?>
             </div>
 
             <?php
-            the_posts_pagination(array(
+            // カスタムページネーション
+            $big = 999999999;
+            echo paginate_links(array(
+                'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+                'format' => '?paged=%#%',
+                'current' => max(1, get_query_var('paged')),
+                'total' => $products_query->max_num_pages,
                 'mid_size' => 2,
                 'prev_text' => __('前へ', 'refine-jewelry-reform'),
                 'next_text' => __('次へ', 'refine-jewelry-reform'),
@@ -72,7 +106,11 @@ get_header(); ?>
 
         <?php else : ?>
             <p>商品が見つかりません。</p>
-        <?php endif; ?>
+        <?php endif; 
+        
+        // クエリをリセット
+        wp_reset_postdata();
+        ?>
     </div>
 </main>
 

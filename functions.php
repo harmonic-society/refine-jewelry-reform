@@ -407,3 +407,60 @@ function refine_jewelry_external_featured_image($html, $post_id, $post_thumbnail
     return $html;
 }
 add_filter('post_thumbnail_html', 'refine_jewelry_external_featured_image', 10, 5);
+
+// Adjust queries for custom post types
+function refine_jewelry_adjust_queries($query) {
+    if (!is_admin() && $query->is_main_query()) {
+        // Products archive
+        if (is_post_type_archive('products')) {
+            $query->set('posts_per_page', 12);
+            $query->set('orderby', 'date');
+            $query->set('order', 'DESC');
+        }
+        
+        // Voice archive
+        if (is_post_type_archive('voice')) {
+            $query->set('posts_per_page', 9);
+            $query->set('orderby', 'date');
+            $query->set('order', 'DESC');
+        }
+        
+        // Taxonomy archives for products
+        if (is_tax(array('before', 'after', 'type', 'stone', 'show'))) {
+            $query->set('posts_per_page', 12);
+            $query->set('orderby', 'date');
+            $query->set('order', 'DESC');
+        }
+    }
+}
+add_action('pre_get_posts', 'refine_jewelry_adjust_queries');
+
+// Add rewrite rules for better URLs
+function refine_jewelry_rewrite_rules() {
+    // Flush rewrite rules to ensure custom post types work
+    flush_rewrite_rules();
+}
+add_action('after_switch_theme', 'refine_jewelry_rewrite_rules');
+
+// Ensure custom post types are properly registered with archives
+function refine_jewelry_fix_post_type_archives() {
+    // Re-register products post type with proper archive settings
+    global $wp_post_types;
+    
+    if (isset($wp_post_types['products'])) {
+        $wp_post_types['products']->has_archive = 'case';
+        $wp_post_types['products']->rewrite = array(
+            'slug' => 'products',
+            'with_front' => false
+        );
+    }
+    
+    if (isset($wp_post_types['voice'])) {
+        $wp_post_types['voice']->has_archive = true;
+        $wp_post_types['voice']->rewrite = array(
+            'slug' => 'voice',
+            'with_front' => false
+        );
+    }
+}
+add_action('init', 'refine_jewelry_fix_post_type_archives', 20);
