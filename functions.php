@@ -73,6 +73,7 @@ function refine_jewelry_register_products_cpt() {
         'capability_type' => 'post',
         'show_in_rest' => true,  // Enable Block Editor
         'rest_base' => 'products',  // REST API endpoint
+        'rest_controller_class' => 'WP_REST_Posts_Controller',  // REST controller
         'rewrite' => array(
             'slug' => 'case',
             'with_front' => false,
@@ -122,6 +123,7 @@ function refine_jewelry_register_voice_cpt() {
         'capability_type' => 'post',
         'show_in_rest' => true,  // Enable Block Editor
         'rest_base' => 'voice',  // REST API endpoint
+        'rest_controller_class' => 'WP_REST_Posts_Controller',  // REST controller
         'rewrite' => array(
             'slug' => 'voice',
             'with_front' => false,
@@ -160,7 +162,8 @@ function refine_jewelry_register_ml_slider_cpt() {
         'publicly_queryable' => false,
         'capability_type' => 'post',
         'show_in_rest' => true,  // Enable Block Editor
-        'rest_base' => 'ml-slider',  // REST API endpoint
+        'rest_base' => 'ml_slider',  // REST API endpoint (use underscore instead of hyphen)
+        'rest_controller_class' => 'WP_REST_Posts_Controller',  // REST controller
     );
     
     register_post_type('ml-slider', $args);
@@ -200,7 +203,8 @@ function refine_jewelry_register_trust_form_cpt() {
         'publicly_queryable' => false,
         'capability_type' => 'post',
         'show_in_rest' => true,  // Enable Block Editor
-        'rest_base' => 'trust-form',  // REST API endpoint
+        'rest_base' => 'trust_form',  // REST API endpoint (use underscore instead of hyphen)
+        'rest_controller_class' => 'WP_REST_Posts_Controller',  // REST controller
         'rewrite' => array(
             'slug' => 'trust-form',
             'with_front' => false,
@@ -705,10 +709,41 @@ function refine_jewelry_save_trust_form_meta($post_id) {
 }
 add_action('save_post_trust-form', 'refine_jewelry_save_trust_form_meta');
 
-// Manual permalink flush (call this once to fix permalinks)
-function refine_jewelry_manual_flush_rules() {
-    global $wp_rewrite;
-    $wp_rewrite->flush_rules();
+// Flush rewrite rules on activation and when needed
+function refine_jewelry_flush_rewrite_rules() {
+    // Register post types and taxonomies first
+    refine_jewelry_register_products_cpt();
+    refine_jewelry_register_voice_cpt();
+    refine_jewelry_register_ml_slider_cpt();
+    refine_jewelry_register_trust_form_cpt();
+    refine_jewelry_register_taxonomies();
+    
+    // Then flush rules
+    flush_rewrite_rules();
 }
-// Uncomment the line below and load the site once, then comment it back
-// add_action('init', 'refine_jewelry_manual_flush_rules', 999);
+register_activation_hook(__FILE__, 'refine_jewelry_flush_rewrite_rules');
+
+// Ensure REST API support for custom fields
+function refine_jewelry_rest_support() {
+    // Register custom fields for REST API
+    $post_types = array('products', 'voice', 'ml-slider', 'trust-form');
+    
+    foreach ($post_types as $post_type) {
+        register_rest_field($post_type, 'meta', array(
+            'get_callback' => function($post) {
+                return get_post_meta($post['id']);
+            },
+            'update_callback' => null,
+            'schema' => null,
+        ));
+    }
+}
+add_action('rest_api_init', 'refine_jewelry_rest_support');
+
+// Force flush rules once on next load
+if (get_option('refine_jewelry_flush_rules') !== '1.1') {
+    add_action('init', function() {
+        flush_rewrite_rules();
+        update_option('refine_jewelry_flush_rules', '1.1');
+    }, 999);
+}
