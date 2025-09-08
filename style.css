@@ -679,6 +679,54 @@ a:hover {
     margin-bottom: var(--spacing-md);
 }
 
+.footer-contact {
+    margin: var(--spacing-lg) 0;
+    padding: var(--spacing-md);
+    background: rgba(212, 175, 55, 0.1);
+    border-radius: 8px;
+    border: 1px solid var(--color-gold-dark);
+}
+
+.footer-tel {
+    margin-bottom: var(--spacing-md);
+}
+
+.footer-tel strong {
+    color: var(--color-gold);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.footer-tel a {
+    display: block;
+    font-size: 1.5rem;
+    color: var(--color-gold-light);
+    text-decoration: none;
+    font-weight: bold;
+    margin: var(--spacing-xs) 0;
+    transition: color var(--transition-normal);
+}
+
+.footer-tel a:hover {
+    color: var(--color-white);
+}
+
+.footer-tel small {
+    color: var(--color-silver);
+    font-size: 0.9rem;
+}
+
+.footer-hours {
+    color: var(--color-silver);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.footer-hours strong {
+    color: var(--color-gold);
+}
+
 .footer-widget h4 {
     color: var(--color-gold);
     font-size: 1.1rem;

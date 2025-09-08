@@ -5,27 +5,27 @@
 
     <div class="shops-grid">
         <div class="shop-card">
-            <h2>池袋・大塚店</h2>
+            <h2>池袋大塚店</h2>
             <div class="shop-info">
                 <div class="info-item">
                     <strong>住所:</strong>
-                    <p>〒170-0013<br>東京都豊島区東池袋1-XX-XX</p>
+                    <p>〒170-0005<br>東京都豊島区南大塚2-15-9</p>
                 </div>
                 <div class="info-item">
-                    <strong>電話:</strong>
-                    <p>03-1234-5678</p>
+                    <strong>TEL:</strong>
+                    <p>フリーダイアル<br>0120-262-704<br><small>（プロになおし）</small></p>
                 </div>
                 <div class="info-item">
                     <strong>営業時間:</strong>
-                    <p>10:00～19:00</p>
+                    <p>11:30～19:00</p>
                 </div>
                 <div class="info-item">
                     <strong>定休日:</strong>
-                    <p>水曜日</p>
+                    <p>火・日・祝</p>
                 </div>
                 <div class="info-item">
                     <strong>アクセス:</strong>
-                    <p>JR池袋駅東口より徒歩5分<br>JR大塚駅南口より徒歩8分</p>
+                    <p>地下鉄・丸の内線新大塚駅徒歩0分<br>JR山手線大塚駅南口徒歩5分</p>
                 </div>
             </div>
             <a href="<?php echo home_url('/shop/ikebukuro/'); ?>" class="btn btn-outline">詳細・地図を見る</a>
@@ -137,6 +137,37 @@
                 </div>
             </div>
             <a href="<?php echo home_url('/shop/kawasaki/'); ?>" class="btn btn-outline">詳細・地図を見る</a>
+        </div>
+
+        <div class="shop-card">
+            <h2>中野マルイ店</h2>
+            <div class="shop-info">
+                <div class="info-item">
+                    <strong>住所:</strong>
+                    <p>〒164-0001<br>東京都中野区中野3-34-28 2F</p>
+                </div>
+                <div class="info-item">
+                    <strong>TEL:</strong>
+                    <p>03-5340-7707</p>
+                </div>
+                <div class="info-item">
+                    <strong>営業時間:</strong>
+                    <p>10:30～20:00</p>
+                </div>
+                <div class="info-item">
+                    <strong>定休日:</strong>
+                    <p>マルイに準ずる</p>
+                </div>
+                <div class="info-item">
+                    <strong>アクセス:</strong>
+                    <p>中野駅から徒歩2分</p>
+                </div>
+                <div class="info-item">
+                    <strong>URL:</strong>
+                    <p><a href="https://www.0101.co.jp/001/shop-guide/shop-detail.html?shop_id=7700" target="_blank" rel="noopener">マルイ店舗情報</a></p>
+                </div>
+            </div>
+            <a href="<?php echo home_url('/shop/nakano/'); ?>" class="btn btn-outline">詳細・地図を見る</a>
         </div>
 
         <div class="shop-card">

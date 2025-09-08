@@ -5,6 +5,17 @@
             <div class="footer-brand">
                 <h3>REFINE JEWELRY REFORM</h3>
                 <p>東京都 池袋・大塚・埼玉県浦和・神奈川県横浜・若葉台・川崎の<br>ジュエリーリフォーム・リメイク・修理専門店</p>
+                <div class="footer-contact">
+                    <p class="footer-tel">
+                        <strong>フリーダイアル</strong><br>
+                        <a href="tel:0120-262-704">0120-262-704</a><br>
+                        <small>（プロになおし）</small>
+                    </p>
+                    <p class="footer-hours">
+                        <strong>営業時間:</strong> 11:30～19:00<br>
+                        <strong>定休日:</strong> 火・日・祝
+                    </p>
+                </div>
                 <div class="social-links">
                     <!-- Social Media Icons can be added here -->
                 </div>
@@ -14,12 +25,13 @@
             <div class="footer-widget">
                 <h4>店舗情報</h4>
                 <ul>
-                    <li><a href="<?php echo esc_url(home_url('/shop/ikebukuro/')); ?>">池袋店</a></li>
-                    <li><a href="<?php echo esc_url(home_url('/shop/otsuka/')); ?>">大塚店</a></li>
+                    <li><a href="<?php echo esc_url(home_url('/shop/ikebukuro/')); ?>">池袋大塚店</a></li>
+                    <li><a href="<?php echo esc_url(home_url('/shop/nakano/')); ?>">中野マルイ店</a></li>
                     <li><a href="<?php echo esc_url(home_url('/shop/urawa/')); ?>">浦和店</a></li>
                     <li><a href="<?php echo esc_url(home_url('/shop/yokohama/')); ?>">横浜店</a></li>
                     <li><a href="<?php echo esc_url(home_url('/shop/wakabadai/')); ?>">若葉台店</a></li>
                     <li><a href="<?php echo esc_url(home_url('/shop/kawasaki/')); ?>">川崎店</a></li>
+                    <li><a href="<?php echo esc_url(home_url('/shop/sakurashinmachi/')); ?>">世田谷桜新町店</a></li>
                 </ul>
             </div>
             
