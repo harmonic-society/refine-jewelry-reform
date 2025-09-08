@@ -607,7 +607,9 @@ function refine_jewelry_fix_post_type_archives() {
         $wp_post_types['products']->has_archive = 'case';
         $wp_post_types['products']->rewrite = array(
             'slug' => 'products',
-            'with_front' => false
+            'with_front' => false,
+            'feeds' => true,
+            'pages' => true
         );
     }
     
@@ -615,7 +617,9 @@ function refine_jewelry_fix_post_type_archives() {
         $wp_post_types['voice']->has_archive = true;
         $wp_post_types['voice']->rewrite = array(
             'slug' => 'voice',
-            'with_front' => false
+            'with_front' => false,
+            'feeds' => true,
+            'pages' => true
         );
     }
 }
@@ -844,10 +848,10 @@ function refine_jewelry_rest_support() {
 add_action('rest_api_init', 'refine_jewelry_rest_support');
 
 // Force flush rules once on next load
-if (get_option('refine_jewelry_flush_rules') !== '1.3') {
+if (get_option('refine_jewelry_flush_rules') !== '1.4') {
     add_action('init', function() {
         flush_rewrite_rules();
-        update_option('refine_jewelry_flush_rules', '1.3');
+        update_option('refine_jewelry_flush_rules', '1.4');
     }, 999);
 }
 
