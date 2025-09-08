@@ -52,6 +52,9 @@
                             <li class="<?php echo is_page('shop') ? 'current-menu-item' : ''; ?>">
                                 <a href="<?php echo esc_url(home_url('/shop/')); ?>">店舗</a>
                             </li>
+                            <li class="<?php echo is_page('factory') ? 'current-menu-item' : ''; ?>">
+                                <a href="<?php echo esc_url(home_url('/factory/')); ?>">自社工場</a>
+                            </li>
                             <li class="<?php echo is_page('qa') ? 'current-menu-item' : ''; ?>">
                                 <a href="<?php echo esc_url(home_url('/qa/')); ?>">Q&A</a>
                             </li>
