@@ -16,6 +16,22 @@ get_header(); ?>
 
                 <div class="product-images">
                     <?php 
+                    // Helper function to fix protocol in image HTML
+                    function fix_image_protocol($html) {
+                        // Get current protocol
+                        $current_protocol = is_ssl() ? 'https:' : 'http:';
+                        
+                        // Replace https with current protocol if needed
+                        if (!is_ssl()) {
+                            $html = str_replace('https:', 'http:', $html);
+                        }
+                        
+                        // Alternative: use protocol-relative URLs
+                        // $html = str_replace(array('https:', 'http:'), '', $html);
+                        
+                        return $html;
+                    }
+                    
                     // Get all attached images
                     $attachments = get_posts(array(
                         'post_type' => 'attachment',
@@ -32,13 +48,19 @@ get_header(); ?>
                             <div class="before-image">
                                 <h3>Before</h3>
                                 <div class="image-wrapper">
-                                    <?php echo wp_get_attachment_image($attachments[0]->ID, 'large', false, array('class' => 'reform-image')); ?>
+                                    <?php 
+                                    $before_img = wp_get_attachment_image($attachments[0]->ID, 'large', false, array('class' => 'reform-image'));
+                                    echo fix_image_protocol($before_img);
+                                    ?>
                                 </div>
                             </div>
                             <div class="after-image">
                                 <h3>After</h3>
                                 <div class="image-wrapper">
-                                    <?php echo wp_get_attachment_image($attachments[1]->ID, 'large', false, array('class' => 'reform-image')); ?>
+                                    <?php 
+                                    $after_img = wp_get_attachment_image($attachments[1]->ID, 'large', false, array('class' => 'reform-image'));
+                                    echo fix_image_protocol($after_img);
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -50,7 +72,10 @@ get_header(); ?>
                                 <div class="images-grid">
                                     <?php for ($i = 2; $i < count($attachments); $i++) : ?>
                                         <div class="detail-image">
-                                            <?php echo wp_get_attachment_image($attachments[$i]->ID, 'medium', false, array('class' => 'detail-img')); ?>
+                                            <?php 
+                                            $detail_img = wp_get_attachment_image($attachments[$i]->ID, 'medium', false, array('class' => 'detail-img'));
+                                            echo fix_image_protocol($detail_img);
+                                            ?>
                                         </div>
                                     <?php endfor; ?>
                                 </div>

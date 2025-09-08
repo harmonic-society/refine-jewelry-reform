@@ -333,9 +333,19 @@ function refine_jewelry_get_product_image($post_id = null, $size = 'medium') {
         $post_id = get_the_ID();
     }
     
+    // Helper function to fix protocol
+    $fix_protocol = function($html) {
+        // If not SSL, replace https with http
+        if (!is_ssl()) {
+            $html = str_replace('https:', 'http:', $html);
+        }
+        return $html;
+    };
+    
     // Try to get featured image
     if (has_post_thumbnail($post_id)) {
-        return get_the_post_thumbnail($post_id, $size, array('class' => 'product-image'));
+        $img = get_the_post_thumbnail($post_id, $size, array('class' => 'product-image'));
+        return $fix_protocol($img);
     }
     
     // Try to get before/after images from meta
@@ -343,15 +353,18 @@ function refine_jewelry_get_product_image($post_id = null, $size = 'medium') {
     $after_image_id = get_post_meta($post_id, '_after_image', true);
     
     if ($after_image_id && wp_attachment_is_image($after_image_id)) {
-        return wp_get_attachment_image($after_image_id, $size, false, array('class' => 'product-image'));
+        $img = wp_get_attachment_image($after_image_id, $size, false, array('class' => 'product-image'));
+        return $fix_protocol($img);
     }
     
     if ($before_image_id && wp_attachment_is_image($before_image_id)) {
-        return wp_get_attachment_image($before_image_id, $size, false, array('class' => 'product-image'));
+        $img = wp_get_attachment_image($before_image_id, $size, false, array('class' => 'product-image'));
+        return $fix_protocol($img);
     }
     
     // Return placeholder image
-    $placeholder_url = 'https://via.placeholder.com/400x400/f0f0f0/999999?text=' . urlencode('ジュエリー画像');
+    $protocol = is_ssl() ? 'https:' : 'http:';
+    $placeholder_url = $protocol . '//via.placeholder.com/400x400/f0f0f0/999999?text=' . urlencode('ジュエリー画像');
     return '<img src="' . $placeholder_url . '" alt="' . get_the_title($post_id) . '" class="product-image placeholder" />';
 }
 
