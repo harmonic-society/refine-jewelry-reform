@@ -931,3 +931,123 @@ function refine_jewelry_register_products_meta() {
     }
 }
 add_action('init', 'refine_jewelry_register_products_meta', 25);
+
+// Contact Form 7 Support
+function refine_jewelry_cf7_support() {
+    // Check if Contact Form 7 is active
+    if (!function_exists('wpcf7')) {
+        return;
+    }
+    
+    // Add custom validation for Japanese phone numbers
+    add_filter('wpcf7_validate_tel', 'refine_jewelry_cf7_validate_phone', 10, 2);
+    add_filter('wpcf7_validate_tel*', 'refine_jewelry_cf7_validate_phone', 10, 2);
+}
+add_action('init', 'refine_jewelry_cf7_support');
+
+// Validate Japanese phone numbers
+function refine_jewelry_cf7_validate_phone($result, $tag) {
+    $name = $tag->name;
+    $value = isset($_POST[$name]) ? trim($_POST[$name]) : '';
+    
+    if ($value) {
+        // Remove spaces, hyphens, and parentheses
+        $cleaned = preg_replace('/[\s\-\(\)]/', '', $value);
+        
+        // Check if it's a valid Japanese phone number
+        if (!preg_match('/^(0[0-9]{9,10}|[\+]?81[0-9]{9,10})$/', $cleaned)) {
+            $result->invalidate($tag, '有効な電話番号を入力してください。');
+        }
+    }
+    
+    return $result;
+}
+
+// Flamingo Support - Custom columns for Flamingo admin
+function refine_jewelry_flamingo_columns($columns) {
+    // Reorder columns for better display
+    $new_columns = array();
+    if (isset($columns['cb'])) $new_columns['cb'] = $columns['cb'];
+    if (isset($columns['title'])) $new_columns['title'] = 'お名前';
+    $new_columns['email'] = 'メールアドレス';
+    $new_columns['subject'] = '件名';
+    $new_columns['status'] = 'ステータス';
+    if (isset($columns['date'])) $new_columns['date'] = $columns['date'];
+    
+    return $new_columns;
+}
+add_filter('manage_flamingo_inbound_posts_columns', 'refine_jewelry_flamingo_columns');
+
+// Display custom column content for Flamingo
+function refine_jewelry_flamingo_column_content($column, $post_id) {
+    $post = get_post($post_id);
+    $submission = get_post_meta($post_id, '_submission', true);
+    
+    switch ($column) {
+        case 'email':
+            if (isset($submission['your-email'])) {
+                echo esc_html($submission['your-email']);
+            }
+            break;
+        case 'subject':
+            if (isset($submission['your-subject'])) {
+                echo esc_html($submission['your-subject']);
+            }
+            break;
+        case 'status':
+            $status = get_post_meta($post_id, '_status', true);
+            if (!$status) $status = 'new';
+            
+            $status_labels = array(
+                'new' => '新規',
+                'read' => '既読',
+                'replied' => '返信済',
+                'spam' => 'スパム'
+            );
+            
+            $label = isset($status_labels[$status]) ? $status_labels[$status] : $status;
+            echo '<span class="status-' . esc_attr($status) . '">' . esc_html($label) . '</span>';
+            break;
+    }
+}
+add_action('manage_flamingo_inbound_posts_custom_column', 'refine_jewelry_flamingo_column_content', 10, 2);
+
+// Add admin styles for Flamingo
+function refine_jewelry_flamingo_admin_styles() {
+    $screen = get_current_screen();
+    if ($screen && $screen->post_type === 'flamingo_inbound') {
+        ?>
+        <style>
+            .status-new { 
+                background: #dc3545; 
+                color: white; 
+                padding: 3px 8px; 
+                border-radius: 3px; 
+                font-size: 11px; 
+            }
+            .status-read { 
+                background: #007bff; 
+                color: white; 
+                padding: 3px 8px; 
+                border-radius: 3px; 
+                font-size: 11px; 
+            }
+            .status-replied { 
+                background: #28a745; 
+                color: white; 
+                padding: 3px 8px; 
+                border-radius: 3px; 
+                font-size: 11px; 
+            }
+            .status-spam { 
+                background: #6c757d; 
+                color: white; 
+                padding: 3px 8px; 
+                border-radius: 3px; 
+                font-size: 11px; 
+            }
+        </style>
+        <?php
+    }
+}
+add_action('admin_head', 'refine_jewelry_flamingo_admin_styles');
