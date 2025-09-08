@@ -15,9 +15,54 @@ get_header(); ?>
                 </header>
 
                 <div class="product-images">
-                    <div class="product-main-image">
-                        <?php echo refine_jewelry_get_product_image(get_the_ID(), 'large'); ?>
-                    </div>
+                    <?php 
+                    // Get all attached images
+                    $attachments = get_posts(array(
+                        'post_type' => 'attachment',
+                        'posts_per_page' => -1,
+                        'post_parent' => get_the_ID(),
+                        'post_mime_type' => 'image',
+                        'orderby' => 'menu_order',
+                        'order' => 'ASC'
+                    ));
+                    
+                    // If we have multiple images, show before/after
+                    if (count($attachments) >= 2) : ?>
+                        <div class="before-after-container">
+                            <div class="before-image">
+                                <h3>Before</h3>
+                                <div class="image-wrapper">
+                                    <?php echo wp_get_attachment_image($attachments[0]->ID, 'large', false, array('class' => 'reform-image')); ?>
+                                </div>
+                            </div>
+                            <div class="after-image">
+                                <h3>After</h3>
+                                <div class="image-wrapper">
+                                    <?php echo wp_get_attachment_image($attachments[1]->ID, 'large', false, array('class' => 'reform-image')); ?>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <?php // Show additional images if available
+                        if (count($attachments) > 2) : ?>
+                            <div class="additional-images">
+                                <h3>詳細写真</h3>
+                                <div class="images-grid">
+                                    <?php for ($i = 2; $i < count($attachments); $i++) : ?>
+                                        <div class="detail-image">
+                                            <?php echo wp_get_attachment_image($attachments[$i]->ID, 'medium', false, array('class' => 'detail-img')); ?>
+                                        </div>
+                                    <?php endfor; ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        
+                    <?php else : ?>
+                        <!-- Fallback to single image or placeholder -->
+                        <div class="product-main-image">
+                            <?php echo refine_jewelry_get_product_image(get_the_ID(), 'large'); ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
                 <!-- Product Details Section -->
@@ -220,10 +265,110 @@ get_header(); ?>
 }
 
 .product-main-image img {
-    max-width: 100%;
+    max-width: 600px;
+    width: 100%;
     height: auto;
     border-radius: 8px;
     box-shadow: var(--shadow-md);
+}
+
+/* Before/After Container */
+.before-after-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+.before-image,
+.after-image {
+    text-align: center;
+}
+
+.before-image h3,
+.after-image h3 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--color-gold-dark);
+    margin-bottom: var(--spacing-md);
+    position: relative;
+    padding-bottom: var(--spacing-sm);
+}
+
+.before-image h3::after,
+.after-image h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 2px;
+    background: var(--color-gold);
+}
+
+.image-wrapper {
+    background: var(--color-white);
+    padding: var(--spacing-md);
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    transition: transform var(--transition-normal);
+}
+
+.image-wrapper:hover {
+    transform: scale(1.02);
+    box-shadow: var(--shadow-xl);
+}
+
+.reform-image {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+    aspect-ratio: 1;
+}
+
+/* Additional Images */
+.additional-images {
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background: var(--color-cream);
+    border-radius: 12px;
+}
+
+.additional-images h3 {
+    font-size: 1.3rem;
+    color: var(--color-gold-dark);
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+}
+
+.images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.detail-image {
+    background: var(--color-white);
+    padding: var(--spacing-sm);
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-normal);
+}
+
+.detail-image:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-md);
+}
+
+.detail-img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    object-fit: cover;
+    aspect-ratio: 1;
 }
 
 .product-details {
@@ -397,6 +542,19 @@ get_header(); ?>
 }
 
 @media (max-width: 768px) {
+    .before-after-container {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+    
+    .reform-image {
+        max-width: 100%;
+    }
+    
+    .images-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+    
     .product-info-grid {
         grid-template-columns: 1fr;
     }
