@@ -74,6 +74,7 @@ function refine_jewelry_register_products_cpt() {
         'show_in_rest' => true,  // Enable Block Editor
         'rest_base' => 'products',  // REST API endpoint
         'rest_controller_class' => 'WP_REST_Posts_Controller',  // REST controller
+        'taxonomies' => array('before', 'after', 'type', 'stone', 'show'),  // Explicitly declare taxonomies
         'rewrite' => array(
             'slug' => 'case',
             'with_front' => false,
@@ -84,7 +85,7 @@ function refine_jewelry_register_products_cpt() {
     
     register_post_type('products', $args);
 }
-add_action('init', 'refine_jewelry_register_products_cpt', 0);
+add_action('init', 'refine_jewelry_register_products_cpt', 20);  // Register after taxonomies
 
 // Flush rewrite rules on theme activation
 function refine_jewelry_rewrite_flush() {
@@ -134,7 +135,7 @@ function refine_jewelry_register_voice_cpt() {
     
     register_post_type('voice', $args);
 }
-add_action('init', 'refine_jewelry_register_voice_cpt', 0);
+add_action('init', 'refine_jewelry_register_voice_cpt', 20);
 
 // Register Custom Post Type: ML Slider
 function refine_jewelry_register_ml_slider_cpt() {
@@ -168,7 +169,7 @@ function refine_jewelry_register_ml_slider_cpt() {
     
     register_post_type('ml-slider', $args);
 }
-add_action('init', 'refine_jewelry_register_ml_slider_cpt', 0);
+add_action('init', 'refine_jewelry_register_ml_slider_cpt', 20);
 
 // Register Custom Post Type: Trust Form (Contact Form Submissions)
 function refine_jewelry_register_trust_form_cpt() {
@@ -215,7 +216,7 @@ function refine_jewelry_register_trust_form_cpt() {
     
     register_post_type('trust-form', $args);
 }
-add_action('init', 'refine_jewelry_register_trust_form_cpt', 0);
+add_action('init', 'refine_jewelry_register_trust_form_cpt', 20);
 
 // Register Custom Taxonomies
 function refine_jewelry_register_taxonomies() {
@@ -349,7 +350,7 @@ function refine_jewelry_register_taxonomies() {
         'rewrite' => false,
     ));
 }
-add_action('init', 'refine_jewelry_register_taxonomies');
+add_action('init', 'refine_jewelry_register_taxonomies', 10);  // Register taxonomies before post types
 
 // Widget Areas
 function refine_jewelry_widgets_init() {
@@ -733,17 +734,88 @@ function refine_jewelry_rest_support() {
             'get_callback' => function($post) {
                 return get_post_meta($post['id']);
             },
-            'update_callback' => null,
-            'schema' => null,
+            'update_callback' => function($value, $post, $field_name) {
+                foreach ($value as $key => $val) {
+                    update_post_meta($post->ID, $key, $val);
+                }
+                return true;
+            },
+            'schema' => array(
+                'type' => 'object',
+                'context' => array('view', 'edit'),
+            ),
         ));
+        
+        // Register taxonomies for REST API specifically for products
+        if ($post_type === 'products') {
+            $taxonomies = array('before', 'after', 'type', 'stone', 'show');
+            foreach ($taxonomies as $tax) {
+                register_rest_field($post_type, $tax, array(
+                    'get_callback' => function($post) use ($tax) {
+                        return wp_get_post_terms($post['id'], $tax, array('fields' => 'ids'));
+                    },
+                    'update_callback' => function($value, $post, $field_name) use ($tax) {
+                        wp_set_post_terms($post->ID, $value, $tax);
+                        return true;
+                    },
+                    'schema' => array(
+                        'type' => 'array',
+                        'items' => array('type' => 'integer'),
+                        'context' => array('view', 'edit'),
+                    ),
+                ));
+            }
+        }
     }
 }
 add_action('rest_api_init', 'refine_jewelry_rest_support');
 
 // Force flush rules once on next load
-if (get_option('refine_jewelry_flush_rules') !== '1.1') {
+if (get_option('refine_jewelry_flush_rules') !== '1.2') {
     add_action('init', function() {
         flush_rewrite_rules();
-        update_option('refine_jewelry_flush_rules', '1.1');
+        update_option('refine_jewelry_flush_rules', '1.2');
     }, 999);
 }
+
+// Ensure products post type works with Block Editor
+function refine_jewelry_fix_products_rest() {
+    global $wp_post_types;
+    
+    if (isset($wp_post_types['products'])) {
+        // Ensure all REST properties are properly set
+        $wp_post_types['products']->show_in_rest = true;
+        $wp_post_types['products']->rest_base = 'products';
+        $wp_post_types['products']->rest_controller_class = 'WP_REST_Posts_Controller';
+        
+        // Make sure taxonomies are available in REST
+        $taxonomies = array('before', 'after', 'type', 'stone', 'show');
+        foreach ($taxonomies as $tax) {
+            register_taxonomy_for_object_type($tax, 'products');
+        }
+    }
+}
+add_action('init', 'refine_jewelry_fix_products_rest', 30);  // Run after everything else
+
+// Register custom meta fields for products post type
+function refine_jewelry_register_products_meta() {
+    $meta_fields = array(
+        '_before_image' => 'integer',
+        '_after_image' => 'integer',
+        '_product_price' => 'string',
+        '_product_material' => 'string',
+        '_product_description' => 'string',
+    );
+    
+    foreach ($meta_fields as $meta_key => $type) {
+        register_post_meta('products', $meta_key, array(
+            'show_in_rest' => true,
+            'single' => true,
+            'type' => $type,
+            'auth_callback' => function() {
+                return current_user_can('edit_posts');
+            }
+        ));
+    }
+}
+add_action('init', 'refine_jewelry_register_products_meta', 25);
