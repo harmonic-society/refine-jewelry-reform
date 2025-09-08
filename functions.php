@@ -71,7 +71,7 @@ function refine_jewelry_register_products_cpt() {
         'exclude_from_search' => false,
         'publicly_queryable' => true,
         'capability_type' => 'post',
-        'rewrite' => array('slug' => 'products'),
+        'rewrite' => array('slug' => 'case'),
     );
     
     register_post_type('products', $args);
