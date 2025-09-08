@@ -71,7 +71,7 @@ function refine_jewelry_register_products_cpt() {
         'exclude_from_search' => false,
         'publicly_queryable' => true,
         'capability_type' => 'post',
-        'show_in_rest' => true,  // Enable Block Editor
+        'show_in_rest' => true,  // Enable REST API (but we'll use Classic Editor)
         'rest_base' => 'products',  // REST API endpoint
         'rest_controller_class' => 'WP_REST_Posts_Controller',  // REST controller
         'taxonomies' => array('before', 'after', 'type', 'stone', 'show'),  // Explicitly declare taxonomies
@@ -771,31 +771,53 @@ function refine_jewelry_rest_support() {
 add_action('rest_api_init', 'refine_jewelry_rest_support');
 
 // Force flush rules once on next load
-if (get_option('refine_jewelry_flush_rules') !== '1.2') {
+if (get_option('refine_jewelry_flush_rules') !== '1.3') {
     add_action('init', function() {
         flush_rewrite_rules();
-        update_option('refine_jewelry_flush_rules', '1.2');
+        update_option('refine_jewelry_flush_rules', '1.3');
     }, 999);
 }
 
-// Ensure products post type works with Block Editor
+// Force Classic Editor for products post type due to complex taxonomies
+function refine_jewelry_use_classic_editor($use_block_editor, $post_type) {
+    // Disable Block Editor for products post type
+    if ($post_type === 'products') {
+        return false;
+    }
+    return $use_block_editor;
+}
+add_filter('use_block_editor_for_post_type', 'refine_jewelry_use_classic_editor', 10, 2);
+
+// Enable Classic Editor meta box for products
+function refine_jewelry_classic_editor_settings() {
+    // Remove Gutenberg from products
+    if (isset($_GET['post'])) {
+        $post_id = $_GET['post'];
+        if (get_post_type($post_id) === 'products') {
+            add_filter('gutenberg_can_edit_post_type', '__return_false', 10);
+        }
+    }
+}
+add_action('admin_init', 'refine_jewelry_classic_editor_settings');
+
+// Ensure products post type works with REST API (for future use)
 function refine_jewelry_fix_products_rest() {
     global $wp_post_types;
     
     if (isset($wp_post_types['products'])) {
-        // Ensure all REST properties are properly set
+        // Keep REST API enabled for potential future use
         $wp_post_types['products']->show_in_rest = true;
         $wp_post_types['products']->rest_base = 'products';
         $wp_post_types['products']->rest_controller_class = 'WP_REST_Posts_Controller';
         
-        // Make sure taxonomies are available in REST
+        // Make sure taxonomies are available
         $taxonomies = array('before', 'after', 'type', 'stone', 'show');
         foreach ($taxonomies as $tax) {
             register_taxonomy_for_object_type($tax, 'products');
         }
     }
 }
-add_action('init', 'refine_jewelry_fix_products_rest', 30);  // Run after everything else
+add_action('init', 'refine_jewelry_fix_products_rest', 30);
 
 // Register custom meta fields for products post type
 function refine_jewelry_register_products_meta() {
