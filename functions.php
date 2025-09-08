@@ -71,6 +71,8 @@ function refine_jewelry_register_products_cpt() {
         'exclude_from_search' => false,
         'publicly_queryable' => true,
         'capability_type' => 'post',
+        'show_in_rest' => true,  // Enable Block Editor
+        'rest_base' => 'products',  // REST API endpoint
         'rewrite' => array(
             'slug' => 'case',
             'with_front' => false,
@@ -118,6 +120,8 @@ function refine_jewelry_register_voice_cpt() {
         'exclude_from_search' => false,
         'publicly_queryable' => true,
         'capability_type' => 'post',
+        'show_in_rest' => true,  // Enable Block Editor
+        'rest_base' => 'voice',  // REST API endpoint
         'rewrite' => array(
             'slug' => 'voice',
             'with_front' => false,
@@ -155,6 +159,8 @@ function refine_jewelry_register_ml_slider_cpt() {
         'exclude_from_search' => true,
         'publicly_queryable' => false,
         'capability_type' => 'post',
+        'show_in_rest' => true,  // Enable Block Editor
+        'rest_base' => 'ml-slider',  // REST API endpoint
     );
     
     register_post_type('ml-slider', $args);
@@ -193,6 +199,8 @@ function refine_jewelry_register_trust_form_cpt() {
         'exclude_from_search' => true,
         'publicly_queryable' => false,
         'capability_type' => 'post',
+        'show_in_rest' => true,  // Enable Block Editor
+        'rest_base' => 'trust-form',  // REST API endpoint
         'rewrite' => array(
             'slug' => 'trust-form',
             'with_front' => false,
@@ -222,6 +230,7 @@ function refine_jewelry_register_taxonomies() {
         'show_ui' => true,
         'show_admin_column' => true,
         'show_in_nav_menus' => true,
+        'show_in_rest' => true,  // Enable REST API for Block Editor
         'rewrite' => array(
             'slug' => 'before',
             'with_front' => false,
@@ -244,6 +253,7 @@ function refine_jewelry_register_taxonomies() {
         'show_ui' => true,
         'show_admin_column' => true,
         'show_in_nav_menus' => true,
+        'show_in_rest' => true,  // Enable REST API for Block Editor
         'rewrite' => array(
             'slug' => 'after',
             'with_front' => false,
@@ -266,6 +276,7 @@ function refine_jewelry_register_taxonomies() {
         'show_ui' => true,
         'show_admin_column' => true,
         'show_in_nav_menus' => true,
+        'show_in_rest' => true,  // Enable REST API for Block Editor
         'rewrite' => array(
             'slug' => 'type',
             'with_front' => false,
@@ -288,6 +299,7 @@ function refine_jewelry_register_taxonomies() {
         'show_ui' => true,
         'show_admin_column' => true,
         'show_in_nav_menus' => true,
+        'show_in_rest' => true,  // Enable REST API for Block Editor
         'rewrite' => array(
             'slug' => 'stone',
             'with_front' => false,
@@ -310,6 +322,7 @@ function refine_jewelry_register_taxonomies() {
         'show_ui' => true,
         'show_admin_column' => true,
         'show_in_nav_menus' => true,
+        'show_in_rest' => true,  // Enable REST API for Block Editor
         'rewrite' => array(
             'slug' => 'show',
             'with_front' => false,
@@ -692,29 +705,6 @@ function refine_jewelry_save_trust_form_meta($post_id) {
 }
 add_action('save_post_trust-form', 'refine_jewelry_save_trust_form_meta');
 
-// Force all content to use protocol-relative URLs
-function refine_jewelry_force_protocol_relative($content) {
-    // Replace both http:// and https:// with //
-    $content = str_replace(array('https://', 'http://'), '//', $content);
-    return $content;
-}
-add_filter('the_content', 'refine_jewelry_force_protocol_relative', 999);
-add_filter('wp_get_attachment_url', 'refine_jewelry_force_protocol_relative', 999);
-add_filter('wp_get_attachment_image_src', function($image) {
-    if (is_array($image)) {
-        $image[0] = str_replace(array('https://', 'http://'), '//', $image[0]);
-    }
-    return $image;
-}, 999);
-add_filter('wp_get_attachment_image_attributes', function($attr) {
-    if (isset($attr['src'])) {
-        $attr['src'] = str_replace(array('https://', 'http://'), '//', $attr['src']);
-    }
-    if (isset($attr['srcset'])) {
-        $attr['srcset'] = str_replace(array('https://', 'http://'), '//', $attr['srcset']);
-    }
-    return $attr;
-}, 999);
 // Manual permalink flush (call this once to fix permalinks)
 function refine_jewelry_manual_flush_rules() {
     global $wp_rewrite;
