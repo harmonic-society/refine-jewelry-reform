@@ -14,81 +14,96 @@ get_header(); ?>
                     <h1 class="entry-title"><?php the_title(); ?></h1>
                 </header>
 
-                <div class="product-images">
-                    <?php 
-                    // Helper function to fix protocol in image HTML
-                    function fix_image_protocol($html) {
-                        // Get current protocol
-                        $current_protocol = is_ssl() ? 'https:' : 'http:';
+                <?php 
+                // Helper function to use protocol-relative URLs
+                function make_protocol_relative($html) {
+                    // Remove both http: and https: to make URLs protocol-relative
+                    $html = str_replace(array('https://', 'http://'), '//', $html);
+                    return $html;
+                }
+                
+                // Get all attached images
+                $attachments = get_posts(array(
+                    'post_type' => 'attachment',
+                    'posts_per_page' => -1,
+                    'post_parent' => get_the_ID(),
+                    'post_mime_type' => 'image',
+                    'orderby' => 'menu_order',
+                    'order' => 'ASC'
+                ));
+                
+                // If we have multiple images, show before/after at the top
+                if (count($attachments) >= 2) : ?>
+                    <!-- Main Before/After Display -->
+                    <div class="before-after-showcase">
+                        <div class="showcase-header">
+                            <h2 class="showcase-title">✨ リフォーム実例 ✨</h2>
+                            <p class="showcase-subtitle">お客様の大切なジュエリーが、新しい輝きへと生まれ変わりました</p>
+                        </div>
                         
-                        // Replace https with current protocol if needed
-                        if (!is_ssl()) {
-                            $html = str_replace('https:', 'http:', $html);
-                        }
-                        
-                        // Alternative: use protocol-relative URLs
-                        // $html = str_replace(array('https:', 'http:'), '', $html);
-                        
-                        return $html;
-                    }
-                    
-                    // Get all attached images
-                    $attachments = get_posts(array(
-                        'post_type' => 'attachment',
-                        'posts_per_page' => -1,
-                        'post_parent' => get_the_ID(),
-                        'post_mime_type' => 'image',
-                        'orderby' => 'menu_order',
-                        'order' => 'ASC'
-                    ));
-                    
-                    // If we have multiple images, show before/after
-                    if (count($attachments) >= 2) : ?>
-                        <div class="before-after-container">
-                            <div class="before-image">
-                                <h3>Before</h3>
-                                <div class="image-wrapper">
+                        <div class="before-after-main">
+                            <div class="before-section">
+                                <div class="section-label">
+                                    <span class="label-text">BEFORE</span>
+                                    <span class="label-subtitle">リフォーム前</span>
+                                </div>
+                                <div class="main-image-wrapper">
                                     <?php 
-                                    $before_img = wp_get_attachment_image($attachments[0]->ID, 'large', false, array('class' => 'reform-image'));
-                                    echo fix_image_protocol($before_img);
+                                    $before_url = wp_get_attachment_image_url($attachments[0]->ID, 'large');
+                                    $before_url = str_replace(array('https://', 'http://'), '//', $before_url);
                                     ?>
+                                    <img src="<?php echo $before_url; ?>" alt="リフォーム前" class="showcase-image">
                                 </div>
                             </div>
-                            <div class="after-image">
-                                <h3>After</h3>
-                                <div class="image-wrapper">
+                            
+                            <div class="arrow-container">
+                                <div class="transform-arrow">→</div>
+                                <div class="transform-text">Transform</div>
+                            </div>
+                            
+                            <div class="after-section">
+                                <div class="section-label">
+                                    <span class="label-text">AFTER</span>
+                                    <span class="label-subtitle">リフォーム後</span>
+                                </div>
+                                <div class="main-image-wrapper">
                                     <?php 
-                                    $after_img = wp_get_attachment_image($attachments[1]->ID, 'large', false, array('class' => 'reform-image'));
-                                    echo fix_image_protocol($after_img);
+                                    $after_url = wp_get_attachment_image_url($attachments[1]->ID, 'large');
+                                    $after_url = str_replace(array('https://', 'http://'), '//', $after_url);
                                     ?>
+                                    <img src="<?php echo $after_url; ?>" alt="リフォーム後" class="showcase-image">
                                 </div>
                             </div>
                         </div>
-                        
-                        <?php // Show additional images if available
-                        if (count($attachments) > 2) : ?>
-                            <div class="additional-images">
-                                <h3>詳細写真</h3>
-                                <div class="images-grid">
-                                    <?php for ($i = 2; $i < count($attachments); $i++) : ?>
-                                        <div class="detail-image">
-                                            <?php 
-                                            $detail_img = wp_get_attachment_image($attachments[$i]->ID, 'medium', false, array('class' => 'detail-img'));
-                                            echo fix_image_protocol($detail_img);
-                                            ?>
-                                        </div>
-                                    <?php endfor; ?>
-                                </div>
+                    </div>
+                    
+                    <?php // Show additional images if available
+                    if (count($attachments) > 2) : ?>
+                        <div class="additional-images">
+                            <h3>その他の詳細写真</h3>
+                            <div class="images-grid">
+                                <?php for ($i = 2; $i < count($attachments); $i++) : ?>
+                                    <div class="detail-image">
+                                        <?php 
+                                        $detail_url = wp_get_attachment_image_url($attachments[$i]->ID, 'medium');
+                                        $detail_url = str_replace(array('https://', 'http://'), '//', $detail_url);
+                                        ?>
+                                        <img src="<?php echo $detail_url; ?>" alt="詳細写真" class="detail-img">
+                                    </div>
+                                <?php endfor; ?>
                             </div>
-                        <?php endif; ?>
-                        
-                    <?php else : ?>
-                        <!-- Fallback to single image or placeholder -->
-                        <div class="product-main-image">
-                            <?php echo refine_jewelry_get_product_image(get_the_ID(), 'large'); ?>
                         </div>
                     <?php endif; ?>
-                </div>
+                    
+                <?php else : ?>
+                    <!-- Fallback to single image or placeholder -->
+                    <div class="product-main-image">
+                        <?php 
+                        $single_img = refine_jewelry_get_product_image(get_the_ID(), 'large');
+                        echo make_protocol_relative($single_img);
+                        ?>
+                    </div>
+                <?php endif; ?>
 
                 <!-- Product Details Section -->
                 <div class="product-details">
@@ -297,61 +312,134 @@ get_header(); ?>
     box-shadow: var(--shadow-md);
 }
 
-/* Before/After Container */
-.before-after-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-xl);
+/* Before/After Showcase - Main Feature */
+.before-after-showcase {
+    background: linear-gradient(135deg, var(--color-gold-light), var(--color-champagne));
+    border-radius: 20px;
+    padding: var(--spacing-xxl);
+    margin: var(--spacing-xl) 0;
+    box-shadow: var(--shadow-xl);
+}
+
+.showcase-header {
+    text-align: center;
     margin-bottom: var(--spacing-xl);
 }
 
-.before-image,
-.after-image {
+.showcase-title {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    color: var(--color-gold-dark);
+    margin-bottom: var(--spacing-sm);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.showcase-subtitle {
+    font-size: 1.2rem;
+    color: var(--color-charcoal);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.before-after-main {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: var(--spacing-lg);
+    align-items: center;
+    background: var(--color-white);
+    border-radius: 15px;
+    padding: var(--spacing-xl);
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+}
+
+.before-section,
+.after-section {
     text-align: center;
 }
 
-.before-image h3,
-.after-image h3 {
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    color: var(--color-gold-dark);
+.section-label {
     margin-bottom: var(--spacing-md);
+}
+
+.label-text {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+}
+
+.before-section .label-text {
+    color: var(--color-gray);
+}
+
+.after-section .label-text {
+    color: var(--color-gold-dark);
+    background: linear-gradient(45deg, var(--color-gold), var(--color-gold-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.label-subtitle {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--color-gray);
+    margin-top: var(--spacing-xs);
+}
+
+.main-image-wrapper {
     position: relative;
-    padding-bottom: var(--spacing-sm);
-}
-
-.before-image h3::after,
-.after-image h3::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50px;
-    height: 2px;
-    background: var(--color-gold);
-}
-
-.image-wrapper {
-    background: var(--color-white);
-    padding: var(--spacing-md);
-    border-radius: 12px;
-    box-shadow: var(--shadow-md);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
     transition: transform var(--transition-normal);
 }
 
-.image-wrapper:hover {
+.main-image-wrapper:hover {
     transform: scale(1.02);
     box-shadow: var(--shadow-xl);
 }
 
-.reform-image {
+.showcase-image {
     width: 100%;
-    max-width: 500px;
+    max-width: 450px;
     height: auto;
-    border-radius: 8px;
+    display: block;
     object-fit: cover;
     aspect-ratio: 1;
+}
+
+.arrow-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 var(--spacing-md);
+}
+
+.transform-arrow {
+    font-size: 3rem;
+    color: var(--color-gold);
+    font-weight: bold;
+    animation: pulse 2s infinite;
+}
+
+.transform-text {
+    font-size: 0.9rem;
+    color: var(--color-gold-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: var(--spacing-xs);
+    font-weight: 600;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(10px);
+    }
 }
 
 /* Additional Images */
@@ -567,12 +655,33 @@ get_header(); ?>
 }
 
 @media (max-width: 768px) {
-    .before-after-container {
+    .before-after-showcase {
+        padding: var(--spacing-lg);
+    }
+    
+    .showcase-title {
+        font-size: 1.8rem;
+    }
+    
+    .showcase-subtitle {
+        font-size: 1rem;
+    }
+    
+    .before-after-main {
         grid-template-columns: 1fr;
         gap: var(--spacing-lg);
     }
     
-    .reform-image {
+    .arrow-container {
+        transform: rotate(90deg);
+        margin: var(--spacing-md) 0;
+    }
+    
+    .label-text {
+        font-size: 1.5rem;
+    }
+    
+    .showcase-image {
         max-width: 100%;
     }
     
