@@ -86,27 +86,27 @@
         </div>
 
         <div class="shop-card">
-            <h2>若葉台店</h2>
+            <h2>横浜若葉台店</h2>
             <div class="shop-info">
                 <div class="info-item">
                     <strong>住所:</strong>
-                    <p>〒215-0035<br>神奈川県川崎市麻生区黒川XX-XX</p>
+                    <p>〒241-0801<br>神奈川県横浜市旭区若葉台3-7-1<br>ショッピングセンターわかば4-3</p>
                 </div>
                 <div class="info-item">
-                    <strong>電話:</strong>
-                    <p>044-567-8901</p>
+                    <strong>TEL:</strong>
+                    <p>045-921-6201</p>
                 </div>
                 <div class="info-item">
                     <strong>営業時間:</strong>
-                    <p>10:00～19:00</p>
+                    <p>10:00～18:30</p>
                 </div>
                 <div class="info-item">
                     <strong>定休日:</strong>
-                    <p>水曜日</p>
+                    <p>日・水</p>
                 </div>
                 <div class="info-item">
                     <strong>アクセス:</strong>
-                    <p>小田急線黒川駅より徒歩10分</p>
+                    <p>東急・青葉台駅からバス15分</p>
                 </div>
             </div>
             <a href="<?php echo home_url('/shop/wakabadai/'); ?>" class="btn btn-outline">詳細・地図を見る</a>

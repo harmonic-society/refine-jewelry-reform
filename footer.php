@@ -29,7 +29,7 @@
                     <li><a href="<?php echo esc_url(home_url('/shop/nakano/')); ?>">中野マルイ店</a></li>
                     <li><a href="<?php echo esc_url(home_url('/shop/urawa/')); ?>">浦和店</a></li>
                     <li><a href="<?php echo esc_url(home_url('/shop/yokohama/')); ?>">横浜店</a></li>
-                    <li><a href="<?php echo esc_url(home_url('/shop/wakabadai/')); ?>">若葉台店</a></li>
+                    <li><a href="<?php echo esc_url(home_url('/shop/wakabadai/')); ?>">横浜若葉台店</a></li>
                     <li><a href="<?php echo esc_url(home_url('/shop/kawasaki/')); ?>">川崎店</a></li>
                     <li><a href="<?php echo esc_url(home_url('/shop/sakurashinmachi/')); ?>">世田谷桜新町店</a></li>
                 </ul>
