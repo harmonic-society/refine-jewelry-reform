@@ -15,25 +15,23 @@ get_header(); ?>
                 </header>
 
                 <?php 
-                // Helper function to use protocol-relative URLs
-                function make_protocol_relative($html) {
-                    // Remove both http: and https: to make URLs protocol-relative
-                    $html = str_replace(array('https://', 'http://'), '//', $html);
-                    return $html;
+                // Extract before image from content
+                $content = get_the_content();
+                $before_image_url = '';
+                
+                // Extract first image URL from content
+                if (preg_match('/<img[^>]+src=["\']([^"\']+)["\'][^>]*>/i', $content, $matches)) {
+                    $before_image_url = $matches[1];
                 }
                 
-                // Get all attached images
-                $attachments = get_posts(array(
-                    'post_type' => 'attachment',
-                    'posts_per_page' => -1,
-                    'post_parent' => get_the_ID(),
-                    'post_mime_type' => 'image',
-                    'orderby' => 'menu_order',
-                    'order' => 'ASC'
-                ));
+                // Get featured image as after image
+                $after_image_url = '';
+                if (has_post_thumbnail()) {
+                    $after_image_url = get_the_post_thumbnail_url(get_the_ID(), 'large');
+                }
                 
-                // If we have multiple images, show before/after at the top
-                if (count($attachments) >= 2) : ?>
+                // Show before/after if both images exist
+                if ($before_image_url && $after_image_url) : ?>
                     <!-- Main Before/After Display -->
                     <div class="before-after-showcase">
                         <div class="showcase-header">
@@ -48,11 +46,7 @@ get_header(); ?>
                                     <span class="label-subtitle">リフォーム前</span>
                                 </div>
                                 <div class="main-image-wrapper">
-                                    <?php 
-                                    $before_url = wp_get_attachment_image_url($attachments[0]->ID, 'large');
-                                    $before_url = str_replace(array('https://', 'http://'), '//', $before_url);
-                                    ?>
-                                    <img src="<?php echo $before_url; ?>" alt="リフォーム前" class="showcase-image">
+                                    <img src="<?php echo esc_url($before_image_url); ?>" alt="リフォーム前" class="showcase-image">
                                 </div>
                             </div>
                             
@@ -67,41 +61,43 @@ get_header(); ?>
                                     <span class="label-subtitle">リフォーム後</span>
                                 </div>
                                 <div class="main-image-wrapper">
-                                    <?php 
-                                    $after_url = wp_get_attachment_image_url($attachments[1]->ID, 'large');
-                                    $after_url = str_replace(array('https://', 'http://'), '//', $after_url);
-                                    ?>
-                                    <img src="<?php echo $after_url; ?>" alt="リフォーム後" class="showcase-image">
+                                    <img src="<?php echo esc_url($after_image_url); ?>" alt="リフォーム後" class="showcase-image">
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <?php // Show additional images if available
-                    if (count($attachments) > 2) : ?>
+                    <?php // Show additional images from content if available
+                    preg_match_all('/<img[^>]+src=["\']([^"\']+)["\'][^>]*>/i', $content, $all_matches);
+                    if (count($all_matches[1]) > 1) : ?>
                         <div class="additional-images">
                             <h3>その他の詳細写真</h3>
                             <div class="images-grid">
-                                <?php for ($i = 2; $i < count($attachments); $i++) : ?>
+                                <?php for ($i = 1; $i < count($all_matches[1]); $i++) : ?>
                                     <div class="detail-image">
-                                        <?php 
-                                        $detail_url = wp_get_attachment_image_url($attachments[$i]->ID, 'medium');
-                                        $detail_url = str_replace(array('https://', 'http://'), '//', $detail_url);
-                                        ?>
-                                        <img src="<?php echo $detail_url; ?>" alt="詳細写真" class="detail-img">
+                                        <img src="<?php echo esc_url($all_matches[1][$i]); ?>" alt="詳細写真" class="detail-img">
                                     </div>
                                 <?php endfor; ?>
                             </div>
                         </div>
                     <?php endif; ?>
                     
-                <?php else : ?>
-                    <!-- Fallback to single image or placeholder -->
+                <?php elseif ($after_image_url) : ?>
+                    <!-- Show only after image if no before image in content -->
                     <div class="product-main-image">
-                        <?php 
-                        $single_img = refine_jewelry_get_product_image(get_the_ID(), 'large');
-                        echo make_protocol_relative($single_img);
-                        ?>
+                        <h3>リフォーム後</h3>
+                        <img src="<?php echo esc_url($after_image_url); ?>" alt="リフォーム後" />
+                    </div>
+                <?php elseif ($before_image_url) : ?>
+                    <!-- Show only before image if no featured image -->
+                    <div class="product-main-image">
+                        <h3>リフォーム前</h3>
+                        <img src="<?php echo esc_url($before_image_url); ?>" alt="リフォーム前" />
+                    </div>
+                <?php else : ?>
+                    <!-- Fallback to placeholder -->
+                    <div class="product-main-image">
+                        <?php echo refine_jewelry_get_product_image(get_the_ID(), 'large'); ?>
                     </div>
                 <?php endif; ?>
 
@@ -168,10 +164,19 @@ get_header(); ?>
                     </div>
                 <?php endif; ?>
 
-                <!-- Main Content -->
-                <?php if (get_the_content()) : ?>
+                <!-- Main Content (without images) -->
+                <?php 
+                $content_without_images = get_the_content();
+                // Remove all img tags from content
+                $content_without_images = preg_replace('/<img[^>]+>/i', '', $content_without_images);
+                // Remove empty paragraphs that may have contained images
+                $content_without_images = preg_replace('/<p[^>]*>\s*<\/p>/i', '', $content_without_images);
+                // Apply content filters
+                $content_without_images = apply_filters('the_content', $content_without_images);
+                
+                if (trim($content_without_images)) : ?>
                     <div class="entry-content">
-                        <?php the_content(); ?>
+                        <?php echo $content_without_images; ?>
                     </div>
                 <?php endif; ?>
 
@@ -302,6 +307,12 @@ get_header(); ?>
 .product-main-image {
     text-align: center;
     margin-bottom: var(--spacing-xl);
+}
+
+.product-main-image h3 {
+    font-size: 1.5rem;
+    color: var(--color-gold-dark);
+    margin-bottom: var(--spacing-md);
 }
 
 .product-main-image img {
