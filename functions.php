@@ -143,31 +143,39 @@ function refine_jewelry_register_ml_slider_cpt() {
 }
 add_action('init', 'refine_jewelry_register_ml_slider_cpt', 0);
 
-// Register Custom Post Type: Trust Form
+// Register Custom Post Type: Trust Form (Contact Form Submissions)
 function refine_jewelry_register_trust_form_cpt() {
     $labels = array(
-        'name' => _x('お問い合わせ', 'Post Type General Name', 'refine-jewelry-reform'),
+        'name' => _x('お問い合わせ履歴', 'Post Type General Name', 'refine-jewelry-reform'),
         'singular_name' => _x('お問い合わせ', 'Post Type Singular Name', 'refine-jewelry-reform'),
-        'menu_name' => __('お問い合わせ', 'refine-jewelry-reform'),
+        'menu_name' => __('お問い合わせ履歴', 'refine-jewelry-reform'),
+        'all_items' => __('すべてのお問い合わせ', 'refine-jewelry-reform'),
+        'add_new_item' => __('新規お問い合わせを追加', 'refine-jewelry-reform'),
+        'add_new' => __('新規追加', 'refine-jewelry-reform'),
+        'edit_item' => __('お問い合わせを編集', 'refine-jewelry-reform'),
+        'view_item' => __('お問い合わせを表示', 'refine-jewelry-reform'),
+        'search_items' => __('お問い合わせを検索', 'refine-jewelry-reform'),
+        'not_found' => __('お問い合わせが見つかりません', 'refine-jewelry-reform'),
     );
     
     $args = array(
-        'label' => __('お問い合わせ', 'refine-jewelry-reform'),
+        'label' => __('お問い合わせ履歴', 'refine-jewelry-reform'),
         'labels' => $labels,
-        'supports' => array('title', 'editor'),
+        'supports' => array('title', 'editor', 'custom-fields'),
         'hierarchical' => false,
         'public' => false,
         'show_ui' => true,
         'show_in_menu' => true,
-        'menu_position' => 21,
-        'menu_icon' => 'dashicons-email',
-        'show_in_admin_bar' => false,
+        'menu_position' => 7,
+        'menu_icon' => 'dashicons-email-alt',
+        'show_in_admin_bar' => true,
         'show_in_nav_menus' => false,
         'can_export' => true,
-        'has_archive' => false,
+        'has_archive' => true,
         'exclude_from_search' => true,
         'publicly_queryable' => false,
         'capability_type' => 'post',
+        'rewrite' => array('slug' => 'trust-form'),
     );
     
     register_post_type('trust-form', $args);
@@ -464,3 +472,165 @@ function refine_jewelry_fix_post_type_archives() {
     }
 }
 add_action('init', 'refine_jewelry_fix_post_type_archives', 20);
+
+// Add custom columns to trust-form admin list
+function refine_jewelry_trust_form_columns($columns) {
+    $new_columns = array();
+    $new_columns['cb'] = $columns['cb'];
+    $new_columns['title'] = 'お名前・日時';
+    $new_columns['customer_email'] = 'メールアドレス';
+    $new_columns['customer_phone'] = '電話番号';
+    $new_columns['status'] = 'ステータス';
+    $new_columns['date'] = '受信日';
+    return $new_columns;
+}
+add_filter('manage_trust-form_posts_columns', 'refine_jewelry_trust_form_columns');
+
+// Populate custom columns for trust-form
+function refine_jewelry_trust_form_column_content($column_name, $post_id) {
+    switch($column_name) {
+        case 'customer_email':
+            $email = get_post_meta($post_id, 'customer_email', true);
+            echo $email ? esc_html($email) : '—';
+            break;
+        case 'customer_phone':
+            $phone = get_post_meta($post_id, 'customer_phone', true);
+            echo $phone ? esc_html($phone) : '—';
+            break;
+        case 'status':
+            $status = get_post_meta($post_id, 'status', true);
+            $status_text = '新規';
+            $status_class = 'new';
+            
+            if ($status === 'in_progress') {
+                $status_text = '対応中';
+                $status_class = 'in-progress';
+            } elseif ($status === 'completed') {
+                $status_text = '完了';
+                $status_class = 'completed';
+            }
+            
+            echo '<span class="status-' . $status_class . '" style="padding: 3px 8px; border-radius: 3px; background: ';
+            echo $status_class === 'new' ? '#dc3545' : ($status_class === 'in-progress' ? '#007bff' : '#28a745');
+            echo '; color: white; font-size: 11px;">' . $status_text . '</span>';
+            break;
+    }
+}
+add_action('manage_trust-form_posts_custom_column', 'refine_jewelry_trust_form_column_content', 10, 2);
+
+// Make columns sortable
+function refine_jewelry_trust_form_sortable_columns($columns) {
+    $columns['customer_email'] = 'customer_email';
+    $columns['status'] = 'status';
+    return $columns;
+}
+add_filter('manage_edit-trust-form_sortable_columns', 'refine_jewelry_trust_form_sortable_columns');
+
+// Add meta box for trust-form details
+function refine_jewelry_add_trust_form_meta_boxes() {
+    add_meta_box(
+        'trust_form_details',
+        'お問い合わせ詳細',
+        'refine_jewelry_trust_form_meta_box_callback',
+        'trust-form',
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'refine_jewelry_add_trust_form_meta_boxes');
+
+// Meta box callback
+function refine_jewelry_trust_form_meta_box_callback($post) {
+    wp_nonce_field('trust_form_meta_box', 'trust_form_meta_box_nonce');
+    
+    $name = get_post_meta($post->ID, 'customer_name', true);
+    $email = get_post_meta($post->ID, 'customer_email', true);
+    $phone = get_post_meta($post->ID, 'customer_phone', true);
+    $message = get_post_meta($post->ID, 'customer_message', true);
+    $status = get_post_meta($post->ID, 'status', true);
+    $date = get_post_meta($post->ID, 'submission_date', true);
+    ?>
+    <style>
+        .trust-form-field {
+            margin-bottom: 15px;
+        }
+        .trust-form-field label {
+            display: inline-block;
+            width: 150px;
+            font-weight: bold;
+        }
+        .trust-form-field input[type="text"],
+        .trust-form-field input[type="email"],
+        .trust-form-field select,
+        .trust-form-field textarea {
+            width: calc(100% - 160px);
+        }
+        .trust-form-field textarea {
+            vertical-align: top;
+        }
+    </style>
+    
+    <div class="trust-form-field">
+        <label for="customer_name">お名前:</label>
+        <input type="text" id="customer_name" name="customer_name" value="<?php echo esc_attr($name); ?>" />
+    </div>
+    
+    <div class="trust-form-field">
+        <label for="customer_email">メールアドレス:</label>
+        <input type="email" id="customer_email" name="customer_email" value="<?php echo esc_attr($email); ?>" />
+    </div>
+    
+    <div class="trust-form-field">
+        <label for="customer_phone">電話番号:</label>
+        <input type="text" id="customer_phone" name="customer_phone" value="<?php echo esc_attr($phone); ?>" />
+    </div>
+    
+    <div class="trust-form-field">
+        <label for="status">ステータス:</label>
+        <select id="status" name="status">
+            <option value="new" <?php selected($status, 'new'); ?>>新規</option>
+            <option value="in_progress" <?php selected($status, 'in_progress'); ?>>対応中</option>
+            <option value="completed" <?php selected($status, 'completed'); ?>>完了</option>
+        </select>
+    </div>
+    
+    <div class="trust-form-field">
+        <label for="customer_message">メッセージ:</label>
+        <textarea id="customer_message" name="customer_message" rows="8"><?php echo esc_textarea($message); ?></textarea>
+    </div>
+    
+    <?php if ($date) : ?>
+    <div class="trust-form-field">
+        <label>受信日時:</label>
+        <span><?php echo esc_html($date); ?></span>
+    </div>
+    <?php endif;
+}
+
+// Save meta box data
+function refine_jewelry_save_trust_form_meta($post_id) {
+    if (!isset($_POST['trust_form_meta_box_nonce'])) {
+        return;
+    }
+    
+    if (!wp_verify_nonce($_POST['trust_form_meta_box_nonce'], 'trust_form_meta_box')) {
+        return;
+    }
+    
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+    
+    $fields = array('customer_name', 'customer_email', 'customer_phone', 'customer_message', 'status');
+    
+    foreach ($fields as $field) {
+        if (isset($_POST[$field])) {
+            update_post_meta($post_id, $field, sanitize_text_field($_POST[$field]));
+        }
+    }
+}
+add_action('save_post_trust-form', 'refine_jewelry_save_trust_form_meta');
