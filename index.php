@@ -222,14 +222,14 @@ get_header(); ?>
 
         .card-inner {
             position: relative;
-            padding: 50px 40px;
+            padding: 50px 40px 40px;
             background: linear-gradient(135deg, #FFFFFF 0%, #FAFAFA 100%);
             border: 1px solid rgba(212, 175, 55, 0.2);
             border-radius: 20px;
             z-index: 1;
             display: flex;
             flex-direction: column;
-            height: 550px;
+            height: 560px;
         }
 
         .card-glow {
@@ -293,10 +293,10 @@ get_header(); ?>
 
         .service-description {
             color: #666;
-            line-height: 1.8;
-            margin-bottom: 25px;
+            line-height: 1.7;
+            margin-bottom: 20px;
             font-size: 0.95rem;
-            height: 140px;
+            height: 145px;
             overflow: hidden;
             display: -webkit-box;
             -webkit-line-clamp: 5;
@@ -307,8 +307,8 @@ get_header(); ?>
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            margin-bottom: 20px;
-            height: 70px;
+            margin-bottom: 25px;
+            height: 72px;
             align-items: flex-start;
             align-content: flex-start;
         }
@@ -376,8 +376,8 @@ get_header(); ?>
             }
             
             .card-inner {
-                padding: 40px 30px;
-                height: 500px;
+                padding: 40px 30px 35px;
+                height: 510px;
             }
             
             .section-title {
@@ -385,12 +385,12 @@ get_header(); ?>
             }
             
             .service-description {
-                height: 120px;
+                height: 125px;
                 -webkit-line-clamp: 4;
             }
             
             .service-features {
-                height: 60px;
+                height: 62px;
             }
         }
         </style>
