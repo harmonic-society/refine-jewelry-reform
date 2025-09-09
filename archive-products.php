@@ -127,9 +127,6 @@ get_header(); ?>
                         <div class="product-image">
                             <a href="<?php the_permalink(); ?>">
                                 <?php echo refine_jewelry_get_product_image(get_the_ID(), 'product-thumbnail'); ?>
-                                <div class="product-overlay">
-                                    <span class="view-detail">詳細を見る</span>
-                                </div>
                             </a>
                             <?php if ($product_code) : ?>
                                 <span class="product-code"><?php echo esc_html($product_code); ?></span>
@@ -318,36 +315,6 @@ get_header(); ?>
 
 .product-card:hover .product-image img {
     transform: scale(1.05);
-}
-
-.product-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity var(--transition-normal);
-    pointer-events: none;
-}
-
-.product-card:hover .product-overlay {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.view-detail {
-    color: var(--color-white);
-    font-size: 1.1rem;
-    font-weight: 500;
-    padding: 0.75rem 1.5rem;
-    border: 2px solid var(--color-white);
-    border-radius: 25px;
-    pointer-events: none;
 }
 
 .product-code {
