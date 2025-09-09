@@ -26,7 +26,16 @@
         
         <section class="service-item">
             <div class="service-icon">
-                <span class="icon-reform">💎</span>
+                <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="30" cy="30" r="28" stroke="url(#reform-icon-gradient)" stroke-width="2"/>
+                    <path d="M30 15L35 25L45 26L37.5 33L39.5 43L30 38L20.5 43L22.5 33L15 26L25 25L30 15Z" fill="url(#reform-icon-gradient)"/>
+                    <defs>
+                        <linearGradient id="reform-icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#D4AF37"/>
+                            <stop offset="100%" style="stop-color:#FFD700"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
             </div>
             <h3>ジュエリーリフォーム</h3>
             <p>思い出の詰まったジュエリーを、今のあなたに似合うデザインに作り変えます。</p>
@@ -41,7 +50,18 @@
 
         <section class="service-item">
             <div class="service-icon">
-                <span class="icon-repair">🔧</span>
+                <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="30" cy="30" r="28" stroke="url(#repair-icon-gradient)" stroke-width="2"/>
+                    <path d="M25 20L20 25L25 30M35 20L40 25L35 30" stroke="url(#repair-icon-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M30 30V40" stroke="url(#repair-icon-gradient)" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="30" cy="40" r="4" fill="url(#repair-icon-gradient)"/>
+                    <defs>
+                        <linearGradient id="repair-icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#B8860B"/>
+                            <stop offset="100%" style="stop-color:#DAA520"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
             </div>
             <h3>ジュエリー修理</h3>
             <p>壊れてしまったジュエリーを、自社工場の熟練職人が丁寧に修理いたします。</p>
@@ -56,7 +76,17 @@
 
         <section class="service-item">
             <div class="service-icon">
-                <span class="icon-purchase">💰</span>
+                <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="30" cy="30" r="28" stroke="url(#purchase-icon-gradient)" stroke-width="2"/>
+                    <rect x="20" y="25" width="20" height="15" stroke="url(#purchase-icon-gradient)" stroke-width="2" fill="none"/>
+                    <path d="M25 25V20C25 17 27 15 30 15C33 15 35 17 35 20V25" stroke="url(#purchase-icon-gradient)" stroke-width="2"/>
+                    <defs>
+                        <linearGradient id="purchase-icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#CD853F"/>
+                            <stop offset="100%" style="stop-color:#DEB887"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
             </div>
             <h3>ジュエリー買取・下取り</h3>
             <p>使わないジュエリーを適正価格で買取。リフォーム費用の一部に充てることも可能です。</p>
@@ -201,28 +231,32 @@
 }
 
 .services-list {
-    margin-bottom: var(--spacing-xxl);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+    max-width: 1200px;
+    margin: 0 auto var(--spacing-xxl);
+    padding: 0 var(--spacing-md);
 }
 
 .services-list > h2 {
+    grid-column: 1 / -1;
     text-align: center;
     color: var(--color-gold-dark);
     font-size: 1.8rem;
     margin-bottom: var(--spacing-xl);
 }
 
-.services-list > section {
-    display: inline-block;
-    margin-bottom: var(--spacing-xl);
-}
-
 .service-item {
     background: var(--color-white);
-    padding: var(--spacing-xl);
+    padding: var(--spacing-lg);
     border-radius: 12px;
     box-shadow: var(--shadow-md);
     text-align: center;
     transition: transform var(--transition-normal);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .service-item:hover {
@@ -231,30 +265,40 @@
 }
 
 .service-icon {
-    font-size: 3rem;
-    margin-bottom: var(--spacing-md);
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--spacing-sm);
+    height: 60px;
+    align-items: center;
 }
 
 .service-item h3 {
     color: var(--color-gold-dark);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.3rem;
+}
+
+.service-item > p {
+    font-size: 0.9rem;
+    color: var(--color-gray-dark);
+    line-height: 1.6;
     margin-bottom: var(--spacing-md);
-    font-size: 1.5rem;
+    flex-grow: 1;
 }
 
 .service-features {
     list-style: none;
     padding: 0;
-    margin: var(--spacing-md) 0;
+    margin: var(--spacing-sm) 0 var(--spacing-md);
     text-align: left;
-    max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
+    font-size: 0.85rem;
 }
 
 .service-features li {
-    padding: var(--spacing-xs) 0;
-    padding-left: 1.5rem;
+    padding: 0.25rem 0;
+    padding-left: 1.2rem;
     position: relative;
+    color: var(--color-gray);
 }
 
 .service-features li::before {
@@ -263,6 +307,29 @@
     left: 0;
     color: var(--color-gold);
     font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.service-item .btn {
+    margin-top: auto;
+    width: 100%;
+}
+
+@media (max-width: 992px) {
+    .services-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .services-list {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+    
+    .service-item {
+        padding: var(--spacing-md);
+    }
 }
 
 .service-strength {
