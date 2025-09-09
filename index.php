@@ -229,7 +229,7 @@ get_header(); ?>
             z-index: 1;
             display: flex;
             flex-direction: column;
-            min-height: 500px;
+            height: 520px;
         }
 
         .card-glow {
@@ -258,6 +258,8 @@ get_header(); ?>
             margin-bottom: 30px;
             display: flex;
             justify-content: center;
+            align-items: center;
+            height: 80px;
             animation: pulse 3s ease-in-out infinite;
         }
 
@@ -273,6 +275,10 @@ get_header(); ?>
             margin-bottom: 5px;
             text-align: center;
             letter-spacing: 0.05em;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .service-subtitle {
@@ -282,6 +288,7 @@ get_header(); ?>
             letter-spacing: 0.2em;
             margin-bottom: 20px;
             font-weight: 500;
+            height: 25px;
         }
 
         .service-description {
@@ -289,7 +296,8 @@ get_header(); ?>
             line-height: 1.8;
             margin-bottom: 25px;
             font-size: 0.95rem;
-            flex-grow: 1;
+            height: 110px;
+            overflow: hidden;
         }
 
         .service-features {
@@ -297,8 +305,9 @@ get_header(); ?>
             flex-wrap: wrap;
             gap: 8px;
             margin-bottom: 20px;
-            min-height: 32px;
-            align-items: center;
+            height: 70px;
+            align-items: flex-start;
+            align-content: flex-start;
         }
 
         .feature-tag {
@@ -326,7 +335,6 @@ get_header(); ?>
             position: relative;
             overflow: hidden;
             align-self: flex-start;
-            margin-top: auto;
         }
 
         .luxury-btn::before {
@@ -366,11 +374,19 @@ get_header(); ?>
             
             .card-inner {
                 padding: 40px 30px;
-                min-height: 450px;
+                height: 480px;
             }
             
             .section-title {
                 font-size: 2rem;
+            }
+            
+            .service-description {
+                height: 90px;
+            }
+            
+            .service-features {
+                height: 60px;
             }
         }
         </style>
