@@ -227,6 +227,9 @@ get_header(); ?>
             border: 1px solid rgba(212, 175, 55, 0.2);
             border-radius: 20px;
             z-index: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 500px;
         }
 
         .card-glow {
@@ -286,13 +289,16 @@ get_header(); ?>
             line-height: 1.8;
             margin-bottom: 25px;
             font-size: 0.95rem;
+            flex-grow: 1;
         }
 
         .service-features {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+            min-height: 32px;
+            align-items: center;
         }
 
         .feature-tag {
@@ -319,6 +325,8 @@ get_header(); ?>
             box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
             position: relative;
             overflow: hidden;
+            align-self: flex-start;
+            margin-top: auto;
         }
 
         .luxury-btn::before {
@@ -358,6 +366,7 @@ get_header(); ?>
             
             .card-inner {
                 padding: 40px 30px;
+                min-height: 450px;
             }
             
             .section-title {
