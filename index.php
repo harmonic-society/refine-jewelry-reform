@@ -229,7 +229,7 @@ get_header(); ?>
             z-index: 1;
             display: flex;
             flex-direction: column;
-            height: 520px;
+            height: 550px;
         }
 
         .card-glow {
@@ -296,8 +296,11 @@ get_header(); ?>
             line-height: 1.8;
             margin-bottom: 25px;
             font-size: 0.95rem;
-            height: 110px;
+            height: 140px;
             overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 5;
+            -webkit-box-orient: vertical;
         }
 
         .service-features {
@@ -374,7 +377,7 @@ get_header(); ?>
             
             .card-inner {
                 padding: 40px 30px;
-                height: 480px;
+                height: 500px;
             }
             
             .section-title {
@@ -382,7 +385,8 @@ get_header(); ?>
             }
             
             .service-description {
-                height: 90px;
+                height: 120px;
+                -webkit-line-clamp: 4;
             }
             
             .service-features {
