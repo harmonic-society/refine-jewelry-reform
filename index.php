@@ -90,20 +90,19 @@ get_header(); ?>
         }
 
         .hero-title {
-            font-family: 'Noto Serif JP', serif;
+            font-family: 'Noto Sans JP', sans-serif;
             font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 700;
+            font-weight: 900;
             color: #FFFFFF;
             margin-bottom: 20px;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.05em;
             line-height: 1.4;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
             animation: fadeInUp 1s ease-out;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
-            transform: translateZ(0);
-            backface-visibility: hidden;
+            -webkit-font-smoothing: subpixel-antialiased;
+            text-rendering: geometricPrecision;
+            transform: none;
+            backface-visibility: visible;
         }
 
         .hero-subtitle {
@@ -131,17 +130,25 @@ get_header(); ?>
         }
 
         .hero-section:not([style*="background-image"]) .hero-title {
-            color: #D4AF37;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-            font-weight: 700;
-            background: none;
-            -webkit-text-fill-color: initial;
-            background-clip: initial;
+            color: #8B6914;
+            text-shadow: none !important;
+            font-weight: 900;
+            font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
+            background: none !important;
+            -webkit-text-fill-color: #8B6914 !important;
+            -webkit-text-stroke: 0;
+            background-clip: initial !important;
+            transform: none !important;
+            filter: none !important;
+            opacity: 1;
+            will-change: auto;
         }
 
         .hero-section:not([style*="background-image"]) .hero-subtitle {
-            color: #666666;
-            text-shadow: none;
+            color: #4A4A4A;
+            text-shadow: none !important;
+            font-weight: 500;
+            opacity: 1;
         }
 
         .hero-cta {
@@ -225,6 +232,12 @@ get_header(); ?>
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+
+        /* Disable animations for hero text to prevent blur */
+        .hero-section:not([style*="background-image"]) .hero-title,
+        .hero-section:not([style*="background-image"]) .hero-subtitle {
+            animation: none !important;
         }
 
         /* Parallax effect on scroll */
