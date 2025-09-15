@@ -376,18 +376,7 @@ get_header(); ?>
                     <div class="luxury-service-card">
                         <div class="card-inner">
                             <div class="service-icon">
-                                <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="40" cy="40" r="35" stroke="url(#reform-gradient)" stroke-width="2" opacity="0.3"/>
-                                    <circle cx="40" cy="40" r="28" stroke="url(#reform-gradient)" stroke-width="1.5"/>
-                                    <path d="M40 20L44 28H52L46 33L48 41L40 36L32 41L34 33L28 28H36L40 20Z" fill="url(#reform-gradient)"/>
-                                    <path d="M30 50C30 50 35 45 40 45C45 45 50 50 50 50" stroke="url(#reform-gradient)" stroke-width="2" stroke-linecap="round"/>
-                                    <defs>
-                                        <linearGradient id="reform-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" style="stop-color:#D4AF37"/>
-                                            <stop offset="100%" style="stop-color:#FFD700"/>
-                                        </linearGradient>
-                                    </defs>
-                                </svg>
+                                <i class="fas fa-gem fa-3x"></i>
                             </div>
                             <h3 class="service-title">リフォーム</h3>
                             <div class="service-subtitle">REFORM</div>
@@ -413,19 +402,7 @@ get_header(); ?>
                     <div class="luxury-service-card">
                         <div class="card-inner">
                             <div class="service-icon">
-                                <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="40" cy="40" r="35" stroke="url(#repair-gradient)" stroke-width="2" opacity="0.3"/>
-                                    <circle cx="40" cy="40" r="28" stroke="url(#repair-gradient)" stroke-width="1.5"/>
-                                    <path d="M35 25L30 30L35 35M45 25L50 30L45 35" stroke="url(#repair-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M40 35V50" stroke="url(#repair-gradient)" stroke-width="2" stroke-linecap="round"/>
-                                    <circle cx="40" cy="50" r="5" fill="url(#repair-gradient)"/>
-                                    <defs>
-                                        <linearGradient id="repair-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" style="stop-color:#B8860B"/>
-                                            <stop offset="100%" style="stop-color:#DAA520"/>
-                                        </linearGradient>
-                                    </defs>
-                                </svg>
+                                <i class="fas fa-tools fa-3x"></i>
                             </div>
                             <h3 class="service-title">修理</h3>
                             <div class="service-subtitle">REPAIR</div>
@@ -451,19 +428,7 @@ get_header(); ?>
                     <div class="luxury-service-card">
                         <div class="card-inner">
                             <div class="service-icon">
-                                <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="40" cy="40" r="35" stroke="url(#purchase-gradient)" stroke-width="2" opacity="0.3"/>
-                                    <circle cx="40" cy="40" r="28" stroke="url(#purchase-gradient)" stroke-width="1.5"/>
-                                    <path d="M30 30H50V45C50 47 48 49 46 49H34C32 49 30 47 30 45V30Z" stroke="url(#purchase-gradient)" stroke-width="2"/>
-                                    <path d="M35 30V25C35 23 37 21 40 21C43 21 45 23 45 25V30" stroke="url(#purchase-gradient)" stroke-width="2"/>
-                                    <circle cx="40" cy="39" r="5" fill="url(#purchase-gradient)"/>
-                                    <defs>
-                                        <linearGradient id="purchase-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" style="stop-color:#CD853F"/>
-                                            <stop offset="100%" style="stop-color:#DEB887"/>
-                                        </linearGradient>
-                                    </defs>
-                                </svg>
+                                <i class="fas fa-hand-holding-usd fa-3x"></i>
                             </div>
                             <h3 class="service-title">買取</h3>
                             <div class="service-subtitle">PURCHASE</div>
@@ -607,10 +572,25 @@ get_header(); ?>
             justify-content: center;
             align-items: center;
             height: 80px;
-            animation: pulse 3s ease-in-out infinite;
+            animation: iconPulse 3s ease-in-out infinite;
         }
 
-        @keyframes pulse {
+        .service-icon i {
+            background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 3.5rem;
+            filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.2));
+            transition: all 0.3s ease;
+        }
+
+        .luxury-service-card:hover .service-icon i {
+            transform: scale(1.1);
+            filter: drop-shadow(0 4px 8px rgba(212, 175, 55, 0.4));
+        }
+
+        @keyframes iconPulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
         }
