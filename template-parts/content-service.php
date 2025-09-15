@@ -26,16 +26,7 @@
         
         <section class="service-item">
             <div class="service-icon">
-                <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="30" cy="30" r="28" stroke="url(#reform-icon-gradient)" stroke-width="2"/>
-                    <path d="M30 15L35 25L45 26L37.5 33L39.5 43L30 38L20.5 43L22.5 33L15 26L25 25L30 15Z" fill="url(#reform-icon-gradient)"/>
-                    <defs>
-                        <linearGradient id="reform-icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#D4AF37"/>
-                            <stop offset="100%" style="stop-color:#FFD700"/>
-                        </linearGradient>
-                    </defs>
-                </svg>
+                <i class="fas fa-gem fa-3x"></i>
             </div>
             <h3>ジュエリーリフォーム</h3>
             <p>思い出の詰まったジュエリーを、今のあなたに似合うデザインに作り変えます。</p>
@@ -50,18 +41,7 @@
 
         <section class="service-item">
             <div class="service-icon">
-                <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="30" cy="30" r="28" stroke="url(#repair-icon-gradient)" stroke-width="2"/>
-                    <path d="M25 20L20 25L25 30M35 20L40 25L35 30" stroke="url(#repair-icon-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M30 30V40" stroke="url(#repair-icon-gradient)" stroke-width="2" stroke-linecap="round"/>
-                    <circle cx="30" cy="40" r="4" fill="url(#repair-icon-gradient)"/>
-                    <defs>
-                        <linearGradient id="repair-icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#B8860B"/>
-                            <stop offset="100%" style="stop-color:#DAA520"/>
-                        </linearGradient>
-                    </defs>
-                </svg>
+                <i class="fas fa-tools fa-3x"></i>
             </div>
             <h3>ジュエリー修理</h3>
             <p>壊れてしまったジュエリーを、自社工場の熟練職人が丁寧に修理いたします。</p>
@@ -76,17 +56,7 @@
 
         <section class="service-item">
             <div class="service-icon">
-                <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="30" cy="30" r="28" stroke="url(#purchase-icon-gradient)" stroke-width="2"/>
-                    <rect x="20" y="25" width="20" height="15" stroke="url(#purchase-icon-gradient)" stroke-width="2" fill="none"/>
-                    <path d="M25 25V20C25 17 27 15 30 15C33 15 35 17 35 20V25" stroke="url(#purchase-icon-gradient)" stroke-width="2"/>
-                    <defs>
-                        <linearGradient id="purchase-icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#CD853F"/>
-                            <stop offset="100%" style="stop-color:#DEB887"/>
-                        </linearGradient>
-                    </defs>
-                </svg>
+                <i class="fas fa-hand-holding-usd fa-3x"></i>
             </div>
             <h3>ジュエリー買取・下取り</h3>
             <p>使わないジュエリーを適正価格で買取。リフォーム費用の一部に充てることも可能です。</p>
@@ -270,6 +240,21 @@
     margin-bottom: var(--spacing-sm);
     height: 60px;
     align-items: center;
+}
+
+.service-icon i {
+    background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 3rem;
+    filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.2));
+    transition: all 0.3s ease;
+}
+
+.service-item:hover .service-icon i {
+    transform: scale(1.1);
+    filter: drop-shadow(0 4px 8px rgba(212, 175, 55, 0.4));
 }
 
 .service-item h3 {
