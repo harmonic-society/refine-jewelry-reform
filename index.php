@@ -93,24 +93,55 @@ get_header(); ?>
             font-family: 'Noto Sans JP', sans-serif;
             font-size: clamp(2rem, 5vw, 3.5rem);
             font-weight: 900;
-            color: #FFFFFF;
             margin-bottom: 20px;
-            letter-spacing: 0.05em;
             line-height: 1.4;
-            animation: fadeInUp 1s ease-out;
             -webkit-font-smoothing: subpixel-antialiased;
             text-rendering: geometricPrecision;
-            transform: none;
-            backface-visibility: visible;
+            position: relative;
+            display: inline-block;
+            /* Vibrant gradient as default */
+            background: linear-gradient(90deg,
+                #B8860B 0%,
+                #D4AF37 20%,
+                #FFD700 35%,
+                #FFA500 50%,
+                #FFD700 65%,
+                #D4AF37 80%,
+                #B8860B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 100%;
+            animation: goldShimmer 4s linear infinite, fadeInUp 1s ease-out;
+            letter-spacing: 0.08em;
+            filter: drop-shadow(0 2px 8px rgba(212, 175, 55, 0.3));
         }
 
-        /* Text shadow only for background image */
+        @keyframes goldShimmer {
+            0% { background-position: 100% center; }
+            100% { background-position: -100% center; }
+        }
+
+        /* Enhanced style for background image */
         .hero-section[style*="background-image"] .hero-title {
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(90deg,
+                #FFD700 0%,
+                #FFED4E 25%,
+                #FFF8DC 50%,
+                #FFED4E 75%,
+                #FFD700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 100%;
+            animation: goldShimmer 4s linear infinite, fadeInUp 1s ease-out;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6))
+                    drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.8));
         }
 
         .hero-section[style*="background-image"] .hero-subtitle {
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            color: #FFF8DC;
         }
 
         .hero-subtitle {
@@ -180,11 +211,6 @@ get_header(); ?>
             background-size: 200% 100%;
             animation: goldShimmer 4s linear infinite;
             letter-spacing: 0.08em;
-        }
-
-        @keyframes goldShimmer {
-            0% { background-position: 100% center; }
-            100% { background-position: -100% center; }
         }
 
         .hero-section:not([style*="background-image"]) .hero-subtitle {
