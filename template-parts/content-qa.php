@@ -6,46 +6,81 @@
     <div class="qa-categories">
         <div class="qa-category">
             <h2>修理・リフォーム全般</h2>
-            
+
             <div class="qa-item">
-                <h3 class="qa-question">どのようなジュエリーでも修理やリフォームできますか？</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">どのようなジュエリーでも修理やリフォームできますか？</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
-                    <p>ジュエリー工房Refineでは自社工場の職人が全て対応しますので、ほとんどのご依頼に対応可能だと思います。</p>
-                    <p>当店の自社工場では、ジュエリーリフォームの全ての工程を自社工場の職人が行っております。フルオーダーでオリジナルのリングやペンダントをご依頼いただくこともありますし、自社工場では、当店以外のお店のジュエリーも修理やリフォームを行っております。</p>
-                    <p>従って、修理もリフォームも、当店でできなければ他店でもできない所が多いのではないかと思います。ご相談やお見積りは全て無料ですので、まずは一度、お気軽にご相談ください。</p>
+                    <div class="qa-answer-content">
+                        <p>ジュエリー工房Refineでは自社工場の職人が全て対応しますので、ほとんどのご依頼に対応可能だと思います。</p>
+                        <p>当店の自社工場では、ジュエリーリフォームの全ての工程を自社工場の職人が行っております。フルオーダーでオリジナルのリングやペンダントをご依頼いただくこともありますし、自社工場では、当店以外のお店のジュエリーも修理やリフォームを行っております。</p>
+                        <p>従って、修理もリフォームも、当店でできなければ他店でもできない所が多いのではないかと思います。ご相談やお見積りは全て無料ですので、まずは一度、お気軽にご相談ください。</p>
+                    </div>
                 </div>
             </div>
 
             <div class="qa-item">
-                <h3 class="qa-question">リフォームって高いのでは？</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">リフォームって高いのでは？</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
+                    <div class="qa-answer-content">
                     <p>セミオーダーか、またはデザイン画からのフルオーダーなど加工の仕方や素材によって、金額はさまざまです。</p>
                     <p>お客様のご予算に合わせていくつかのご提案をさせていただきますので、ぜひ一度ご相談ください。ご相談、お見積り（デザイン画提示も含む）までは全て無料です。</p>
+                    </div>
                 </div>
             </div>
 
             <div class="qa-item">
-                <h3 class="qa-question">リフォームっていくらくらいするの？</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">リフォームっていくらくらいするの？</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
+                    <div class="qa-answer-content">
                     <p>加工方法や素材によってさまざまな金額になります。</p>
                     <p>指輪からペンダントのリフォームで30,000円から、オーダーリフォームで80,000円からです。</p>
                     <p>リフォームと同時に、多くの方が、ご自身の使わなくなったジュエリーの下取りを併用することで、加工賃を安く抑えています。</p>
+                    </div>
                 </div>
             </div>
 
             <div class="qa-item">
-                <h3 class="qa-question">修理や加工は何日くらいでできるの？</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">修理や加工は何日くらいでできるの？</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
+                    <div class="qa-answer-content">
                     <p>内容によって異なりますが、修理や加工に関しましてはおおよそ10日から2週間ほどいただいております。</p>
                     <p>お急ぎの場合はできる限りの対応をさせていただきますので、その旨をスタッフにお申し付けください。</p>
+                    </div>
                 </div>
             </div>
 
             <div class="qa-item">
-                <h3 class="qa-question">店員が店内でリフォーム（加工）しているの？</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">店員が店内でリフォーム（加工）しているの？</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
+                    <div class="qa-answer-content">
                     <p>いいえ、ジュエリー工房Refineでお預かりしたお品物は、全て御徒町の本社工場にて、熟練した職人が丁寧に加工しております。</p>
                     <p>原型作り・石留め・磨きなどそれぞれ分業制で、多くの職人の手を経て完成します。</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -54,42 +89,77 @@
             <h2>指輪の修理・加工</h2>
             
             <div class="qa-item">
-                <h3 class="qa-question">指輪のサイズ直しはできるのですか？</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">指輪のサイズ直しはできるのですか？</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
+                    <div class="qa-answer-content">
                     <p>はい、できます。</p>
                     <p>素材の違いや石が付いているなどの状態によって金額や加工方法が異なりますので、まずはお品物を拝見させてください。</p>
+                    </div>
                 </div>
             </div>
 
             <div class="qa-item">
-                <h3 class="qa-question">指輪が曲がってしまったのですが直せますか？</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">指輪が曲がってしまったのですが直せますか？</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
+                    <div class="qa-answer-content">
                     <p>はい、大丈夫です。</p>
                     <p>金やプラチナは皆様が想像している以上にやわらかい素材です。重い荷物を持った時など、強い力が加わると変形してしまいます。大抵のものは直りますので、お品物をお持ちください。</p>
+                    </div>
                 </div>
             </div>
 
             <div class="qa-item">
-                <h3 class="qa-question">指輪からペンダントに加工することはできますか？</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">指輪からペンダントに加工することはできますか？</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
+                    <div class="qa-answer-content">
                     <p>はい、できます。</p>
                     <p>簡易的な方法からオリジナルデザインでお作りする方法までさまざまなご提案ができますので、ぜひともご相談ください。</p>
+                    </div>
                 </div>
             </div>
 
             <div class="qa-item">
-                <h3 class="qa-question">指輪などを溶かしてそれを使って加工することはできますか？</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">指輪などを溶かしてそれを使って加工することはできますか？</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
+                    <div class="qa-answer-content">
                     <p>はい、限度がありますができます。</p>
                     <p>お形見の指輪などを溶かしてその金やプラチナを使い、新たに指輪やペンダントをお作りいただくこともできますので、まずはご相談ください。</p>
+                    </div>
                 </div>
             </div>
 
             <div class="qa-item">
-                <h3 class="qa-question">石が取れてしまったのですが…</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">石が取れてしまったのですが…</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
+                    <div class="qa-answer-content">
                     <p>指輪などの石が取れてしまった場合はいくつかの方法で修理をすることが可能です。</p>
                     <p>また、外れた石がなくなってしまった場合も同等のものをご用意して石留めをすることもできます。</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -98,36 +168,64 @@
             <h2>ネックレス・チェーンの修理</h2>
             
             <div class="qa-item">
-                <h3 class="qa-question">ネックレスが切れてしまったが直せますか？</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">ネックレスが切れてしまったが直せますか？</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
+                    <div class="qa-answer-content">
                     <p>はい、できます。</p>
                     <p>細いネックレスは、少しの引っ掛かりで切れてしまうケースがあります。金やプラチナ・銀のネックレスは「ロー付け」という溶接加工で直せるものがほとんどです。</p>
                     <p>直営工場の職人が丁寧に直しますので、まずは一度お品物を拝見させてください。</p>
+                    </div>
                 </div>
             </div>
 
             <div class="qa-item">
-                <h3 class="qa-question">ネックレスの金具が壊れてしまったのだけれど直せますか？</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">ネックレスの金具が壊れてしまったのだけれど直せますか？</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
+                    <div class="qa-answer-content">
                     <p>はい、大丈夫です。</p>
                     <p>小さい部品ですので、大抵はパーツの交換となります。さまざまな素材のパーツがございますので、金額やつけやすさなどからお好きなものをお選びください。</p>
+                    </div>
                 </div>
             </div>
 
             <div class="qa-item">
-                <h3 class="qa-question">ネックレスの金具などが小さすぎてなかなかうまく留められません</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">ネックレスの金具などが小さすぎてなかなかうまく留められません</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
+                    <div class="qa-answer-content">
                     <p>このご相談はとても多くお受けいたしております。</p>
                     <p>そのようなお客様向けに、磁石などで簡単に留められる金具など、さまざまな便利パーツもありますので、ぜひ一度ご相談ください。</p>
+                    </div>
                 </div>
             </div>
 
             <div class="qa-item">
-                <h3 class="qa-question">ネックレスが長いのですが、短くできますか？</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">ネックレスが長いのですが、短くできますか？</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
+                    <div class="qa-answer-content">
                     <p>はい、できます。</p>
                     <p>長いものをカットして短くしたり、逆に短いものにアジャスターパーツを取り付けて長くしたりすることもできます。</p>
                     <p>まずは一度お品物を拝見させてください。</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -136,18 +234,32 @@
             <h2>真珠・パールの修理</h2>
             
             <div class="qa-item">
-                <h3 class="qa-question">真珠のネックレスの糸が切れてしまいましたが直せますか？</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">真珠のネックレスの糸が切れてしまいましたが直せますか？</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
+                    <div class="qa-answer-content">
                     <p>はい、できます。</p>
                     <p>糸は経年劣化しますので、定期的なメンテナンスが必要になります。糸やワイヤーを使って修理いたしますので、お品物をお持ちください。</p>
+                    </div>
                 </div>
             </div>
 
             <div class="qa-item">
-                <h3 class="qa-question">真珠の珠を足してくれることはできますか？</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">真珠の珠を足してくれることはできますか？</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
+                    <div class="qa-answer-content">
                     <p>はい、できます。</p>
                     <p>お手持ちの真珠の色や形に合わせて、足りなくなった珠と同等の珠をご用意してご提案させていただくことができます。</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -156,18 +268,32 @@
             <h2>ピアス・イヤリングの加工</h2>
             
             <div class="qa-item">
-                <h3 class="qa-question">イヤリングからピアス、ピアスからイヤリングには加工できますか？</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">イヤリングからピアス、ピアスからイヤリングには加工できますか？</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
+                    <div class="qa-answer-content">
                     <p>はい、できます。</p>
                     <p>ピアスやイヤリングのパーツはさまざまありますので、素材と形状お好きなものをお選びください。（パーツを溶接しますので、素材によっては不可のものもあります）</p>
+                    </div>
                 </div>
             </div>
 
             <div class="qa-item">
-                <h3 class="qa-question">金属アレルギーなのですが…</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">金属アレルギーなのですが…</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
+                    <div class="qa-answer-content">
                     <p>お客様の症状に合わせて、できる限りの対応をさせていただきます。</p>
                     <p>一番お問い合わせの多い、ピアスのポスト（針の部分）をチタン製に代える加工等が可能ですので、ぜひ一度ご相談ください。</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -176,18 +302,32 @@
             <h2>その他のアクセサリー</h2>
             
             <div class="qa-item">
-                <h3 class="qa-question">カフスなどから指輪やペンダントに加工できますか？</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">カフスなどから指輪やペンダントに加工できますか？</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
+                    <div class="qa-answer-content">
                     <p>はい、できます。</p>
                     <p>ジュエリー工房Refineでは、簡易的な加工からオーダーメイドまでいくつかの加工方法をご提案できます。ご主人様のカフスを奥様がペンダントに作り直す等、多くのケースがありますので、一度ご相談ください。</p>
+                    </div>
                 </div>
             </div>
 
             <div class="qa-item">
-                <h3 class="qa-question">数珠（じゅず）が切れてしまったのですが直せますか？</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">数珠（じゅず）が切れてしまったのですが直せますか？</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
+                    <div class="qa-answer-content">
                     <p>はい、できます。</p>
                     <p>是非一度お品物をお持ちください。</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -196,27 +336,48 @@
             <h2>素材・メンテナンス</h2>
             
             <div class="qa-item">
-                <h3 class="qa-question">シルバー素材のものですが直せますか？</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">シルバー素材のものですが直せますか？</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
+                    <div class="qa-answer-content">
                     <p>はい、できます。</p>
                     <p>石付きのもので不可の場合もありますが、なるべくご要望に沿えるようご提案をいたしますので、お品物を一度拝見させてください。</p>
+                    </div>
                 </div>
             </div>
 
             <div class="qa-item">
-                <h3 class="qa-question">シルバーが黒くなってしまったのですが…</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">シルバーが黒くなってしまったのですが…</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
+                    <div class="qa-answer-content">
                     <p>シルバー（銀製品）は放っておくと黒くなってしまいます。</p>
                     <p>クロスや専用の液体で黒みを取る方法や上からコーティングをしてしまう方法など、いくつかのご提案ができます。</p>
                     <p>お品物を一度拝見させてください。</p>
+                    </div>
                 </div>
             </div>
 
             <div class="qa-item">
-                <h3 class="qa-question">素材が分からないアクセサリーですが直せますか？</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">素材が分からないアクセサリーですが直せますか？</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
+                    <div class="qa-answer-content">
                     <p>はい、ジュエリー工房Refineではお客様の「大切価値」を第一に考え、可能な限り、さまざまな修理の方法をご提案させていただいております。</p>
                     <p>まずはお品物を一度拝見させてください。</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -225,19 +386,33 @@
             <h2>刻印・文字入れ</h2>
             
             <div class="qa-item">
-                <h3 class="qa-question">文字を入れたりすることはできますか？</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">文字を入れたりすることはできますか？</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
+                    <div class="qa-answer-content">
                     <p>はい、できます。</p>
                     <p>職人が手作業で打刻する方法や、レーザー彫刻機を使ってお好きな書体やマークを指輪やペンダントの表面や裏に入れることもできます。</p>
                     <p>お客様のご希望に合わせて、できる限りの対応をいたしますので、是非一度ご相談ください。</p>
+                    </div>
                 </div>
             </div>
 
             <div class="qa-item">
-                <h3 class="qa-question">文字を消すことはできますか？</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">文字を消すことはできますか？</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
+                    <div class="qa-answer-content">
                     <p>はい、できます。</p>
                     <p>指輪の内側に彫ってある文字を消して新たな文字を入れることも可能です。</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -246,20 +421,34 @@
             <h2>買取・安心保証</h2>
             
             <div class="qa-item">
-                <h3 class="qa-question">使わなくなったジュエリーの買取りもしてくれますか？</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">使わなくなったジュエリーの買取りもしてくれますか？</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
+                    <div class="qa-answer-content">
                     <p>はい、できます。</p>
                     <p>使わなくなったジュエリーの買取りだけもできますが、ジュエリー工房Refineではお客様のお持ち込みのジュエリーの活用方法（1.直して使う　2.そのまま受け継ぐ　3.買取りするなど）も含めて、お客様の立場でのアドバイスをさせていただいております。</p>
+                    </div>
                 </div>
             </div>
 
             <div class="qa-item">
-                <h3 class="qa-question">預けた宝石を替えられたりしないの？</h3>
+                <button class="qa-question" aria-expanded="false">
+                    <span class="qa-question-text">預けた宝石を替えられたりしないの？</span>
+                    <svg class="qa-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
                 <div class="qa-answer">
+                    <div class="qa-answer-content">
                     <p>ジュエリー工房Refineにも、過去にそのような経験をされたというお客様がいらっしゃったことがあり、そういったご心配は推察できます。</p>
                     <p>当店では、お預かりの際、伝票に詳細を記載するとともに、証拠としての写真をその場で撮影し、お客様と双方で保管するようにしています。</p>
                     <p>また、ダイヤと思われる石に関しては、その場で「ダイヤモンドチェッカー」という装置でのチェックも実施しています。</p>
                     <p>お預かりしたお品物は、お渡しが完了するまで責任を持って保管させていただいておりますので、ご安心ください。</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -310,43 +499,98 @@
 }
 
 .qa-item {
-    margin-bottom: var(--spacing-lg);
-    padding-bottom: var(--spacing-lg);
-    border-bottom: 1px solid var(--color-silver);
+    margin-bottom: var(--spacing-md);
+    border: 1px solid var(--color-silver);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
 }
 
-.qa-item:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
+.qa-item:hover {
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.1);
+    border-color: var(--color-gold-light);
 }
 
 .qa-question {
+    width: 100%;
+    text-align: left;
+    background: linear-gradient(135deg, #fafafa, #ffffff);
+    border: none;
+    padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-lg) 3rem;
+    font-size: 1.05rem;
+    font-weight: 500;
     color: var(--color-charcoal);
-    font-size: 1.1rem;
-    margin-bottom: var(--spacing-sm);
+    cursor: pointer;
     position: relative;
-    padding-left: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+}
+
+.qa-question:hover {
+    background: linear-gradient(135deg, #f5f5f5, #fafafa);
+}
+
+.qa-question.active {
+    background: linear-gradient(135deg, var(--color-champagne), #ffffff);
+    color: var(--color-gold-dark);
 }
 
 .qa-question::before {
     content: "Q";
     position: absolute;
-    left: 0;
-    top: 0;
+    left: var(--spacing-md);
     color: var(--color-gold);
     font-weight: bold;
     font-size: 1.2rem;
 }
 
-.qa-answer {
-    padding-left: 2rem;
-    color: var(--color-gray-dark);
-    line-height: 1.8;
+.qa-question-text {
+    flex: 1;
+    padding-right: var(--spacing-md);
 }
 
-.qa-answer p {
-    margin: 0;
+.qa-icon {
+    flex-shrink: 0;
+    color: var(--color-gold);
+    transition: transform 0.3s ease;
+}
+
+.qa-question.active .qa-icon {
+    transform: rotate(45deg);
+}
+
+.qa-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background: var(--color-white);
+}
+
+.qa-answer-content {
+    padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-lg) 3rem;
+    color: var(--color-gray-dark);
+    line-height: 1.8;
+    position: relative;
+}
+
+.qa-answer-content::before {
+    content: "A";
+    position: absolute;
+    left: var(--spacing-md);
+    top: var(--spacing-lg);
+    color: var(--color-gold-light);
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.qa-answer-content p {
+    margin-bottom: var(--spacing-sm);
+}
+
+.qa-answer-content p:last-child {
+    margin-bottom: 0;
 }
 
 .qa-contact {
@@ -368,12 +612,58 @@
 
 @media (max-width: 768px) {
     .qa-question {
-        font-size: 1rem;
-        padding-left: 1.5rem;
+        font-size: 0.95rem;
+        padding: var(--spacing-md) var(--spacing-md) var(--spacing-md) 2.5rem;
     }
-    
-    .qa-answer {
-        padding-left: 1.5rem;
+
+    .qa-question::before {
+        font-size: 1rem;
+    }
+
+    .qa-answer-content {
+        padding: var(--spacing-md) var(--spacing-md) var(--spacing-md) 2.5rem;
+    }
+
+    .qa-answer-content::before {
+        font-size: 1rem;
     }
 }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Q&Aアコーディオン機能
+    const qaQuestions = document.querySelectorAll('.qa-question');
+
+    qaQuestions.forEach(question => {
+        question.addEventListener('click', function() {
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+            const answer = this.nextElementSibling;
+            const icon = this.querySelector('.qa-icon');
+
+            // 現在のカテゴリ内の他のアコーディオンを閉じる（オプション：この行をコメントアウトすると複数開けるようになります）
+            const category = this.closest('.qa-category');
+            const otherQuestions = category.querySelectorAll('.qa-question[aria-expanded="true"]');
+            otherQuestions.forEach(otherQuestion => {
+                if (otherQuestion !== this) {
+                    otherQuestion.setAttribute('aria-expanded', 'false');
+                    otherQuestion.classList.remove('active');
+                    const otherAnswer = otherQuestion.nextElementSibling;
+                    otherAnswer.style.maxHeight = '0';
+                }
+            });
+
+            // このアコーディオンの開閉を切り替える
+            if (isExpanded) {
+                this.setAttribute('aria-expanded', 'false');
+                this.classList.remove('active');
+                answer.style.maxHeight = '0';
+            } else {
+                this.setAttribute('aria-expanded', 'true');
+                this.classList.add('active');
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+            }
+        });
+    });
+});
+</script>
