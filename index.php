@@ -97,12 +97,20 @@ get_header(); ?>
             margin-bottom: 20px;
             letter-spacing: 0.05em;
             line-height: 1.4;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
             animation: fadeInUp 1s ease-out;
             -webkit-font-smoothing: subpixel-antialiased;
             text-rendering: geometricPrecision;
             transform: none;
             backface-visibility: visible;
+        }
+
+        /* Text shadow only for background image */
+        .hero-section[style*="background-image"] .hero-title {
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-section[style*="background-image"] .hero-subtitle {
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
         }
 
         .hero-subtitle {
@@ -111,7 +119,6 @@ get_header(); ?>
             margin-bottom: 40px;
             line-height: 1.8;
             letter-spacing: 0.05em;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
             animation: fadeInUp 1s ease-out 0.2s;
             animation-fill-mode: both;
             -webkit-font-smoothing: antialiased;
