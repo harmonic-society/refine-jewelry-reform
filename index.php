@@ -97,10 +97,13 @@ get_header(); ?>
             margin-bottom: 20px;
             letter-spacing: 0.1em;
             line-height: 1.4;
-            text-shadow:
-                2px 2px 4px rgba(0, 0, 0, 0.5),
-                0 0 30px rgba(212, 175, 55, 0.3);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
             animation: fadeInUp 1s ease-out;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            transform: translateZ(0);
+            backface-visibility: hidden;
         }
 
         .hero-subtitle {
@@ -112,6 +115,9 @@ get_header(); ?>
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
             animation: fadeInUp 1s ease-out 0.2s;
             animation-fill-mode: both;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
 
         /* If no background image is set, use default styling */
@@ -125,12 +131,12 @@ get_header(); ?>
         }
 
         .hero-section:not([style*="background-image"]) .hero-title {
-            color: #2C2C2C;
-            text-shadow: none;
-            background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #D4AF37;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            font-weight: 700;
+            background: none;
+            -webkit-text-fill-color: initial;
+            background-clip: initial;
         }
 
         .hero-section:not([style*="background-image"]) .hero-subtitle {
