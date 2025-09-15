@@ -1055,3 +1055,86 @@ function refine_jewelry_flamingo_admin_styles() {
     }
 }
 add_action('admin_head', 'refine_jewelry_flamingo_admin_styles');
+
+// WordPress Customizer for Hero Background
+function refine_jewelry_customize_register($wp_customize) {
+    // Hero Section
+    $wp_customize->add_section('hero_section', array(
+        'title' => __('ヒーローセクション', 'refine-jewelry-reform'),
+        'priority' => 30,
+        'description' => __('トップページのヒーローセクションの設定', 'refine-jewelry-reform'),
+    ));
+
+    // Hero Background Image
+    $wp_customize->add_setting('hero_background_image', array(
+        'default' => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport' => 'refresh',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'hero_background_image', array(
+        'label' => __('背景画像', 'refine-jewelry-reform'),
+        'section' => 'hero_section',
+        'settings' => 'hero_background_image',
+        'description' => __('推奨サイズ: 1920x800px', 'refine-jewelry-reform'),
+    )));
+
+    // Hero Title
+    $wp_customize->add_setting('hero_title', array(
+        'default' => 'リフォームリペア専門店<br>ジュエリー工房リファイン',
+        'sanitize_callback' => 'wp_kses_post',
+        'transport' => 'refresh',
+    ));
+
+    $wp_customize->add_control('hero_title', array(
+        'label' => __('ヒーロータイトル', 'refine-jewelry-reform'),
+        'section' => 'hero_section',
+        'type' => 'textarea',
+        'description' => __('HTMLタグを使用できます', 'refine-jewelry-reform'),
+    ));
+
+    // Hero Subtitle
+    $wp_customize->add_setting('hero_subtitle', array(
+        'default' => '東京都 池袋・大塚・埼玉県浦和・神奈川県横浜・若葉台・川崎の<br>ジュエリーリフォーム・リメイク・修理専門店',
+        'sanitize_callback' => 'wp_kses_post',
+        'transport' => 'refresh',
+    ));
+
+    $wp_customize->add_control('hero_subtitle', array(
+        'label' => __('ヒーローサブタイトル', 'refine-jewelry-reform'),
+        'section' => 'hero_section',
+        'type' => 'textarea',
+        'description' => __('HTMLタグを使用できます', 'refine-jewelry-reform'),
+    ));
+
+    // Overlay Opacity
+    $wp_customize->add_setting('hero_overlay_opacity', array(
+        'default' => '0.4',
+        'sanitize_callback' => 'refine_jewelry_sanitize_opacity',
+        'transport' => 'refresh',
+    ));
+
+    $wp_customize->add_control('hero_overlay_opacity', array(
+        'label' => __('オーバーレイの透明度', 'refine-jewelry-reform'),
+        'section' => 'hero_section',
+        'type' => 'range',
+        'input_attrs' => array(
+            'min' => 0,
+            'max' => 1,
+            'step' => 0.1,
+        ),
+        'description' => __('背景画像の上に重ねる暗いオーバーレイの透明度（0=透明、1=不透明）', 'refine-jewelry-reform'),
+    ));
+}
+add_action('customize_register', 'refine_jewelry_customize_register');
+
+// Sanitize opacity value
+function refine_jewelry_sanitize_opacity($value) {
+    $value = floatval($value);
+    if ($value < 0) {
+        return 0;
+    } elseif ($value > 1) {
+        return 1;
+    }
+    return $value;
+}

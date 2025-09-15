@@ -9,12 +9,247 @@ get_header(); ?>
 <main id="main" class="site-main">
     <?php if (is_home() || is_front_page()) : ?>
         <!-- Hero Section -->
-        <section class="hero-section">
-            <div class="container">
-                <h1 class="text-center">リフォームリペア専門店<br>ジュエリー工房リファイン</h1>
-                <p class="text-center">東京都 池袋・大塚・埼玉県浦和・神奈川県横浜・若葉台・川崎の<br>ジュエリーリフォーム・リメイク・修理専門店</p>
+        <?php
+        $hero_bg = get_theme_mod('hero_background_image', '');
+        $hero_title = get_theme_mod('hero_title', 'リフォームリペア専門店<br>ジュエリー工房リファイン');
+        $hero_subtitle = get_theme_mod('hero_subtitle', '東京都 池袋・大塚・埼玉県浦和・神奈川県横浜・若葉台・川崎の<br>ジュエリーリフォーム・リメイク・修理専門店');
+        $overlay_opacity = get_theme_mod('hero_overlay_opacity', '0.4');
+        ?>
+        <section class="hero-section" <?php if($hero_bg) : ?>style="background-image: url('<?php echo esc_url($hero_bg); ?>');"<?php endif; ?>>
+            <?php if($hero_bg) : ?>
+                <div class="hero-overlay" style="opacity: <?php echo esc_attr($overlay_opacity); ?>;"></div>
+            <?php endif; ?>
+            <div class="hero-content">
+                <div class="container">
+                    <h1 class="hero-title"><?php echo wp_kses_post($hero_title); ?></h1>
+                    <p class="hero-subtitle"><?php echo wp_kses_post($hero_subtitle); ?></p>
+                    <div class="hero-cta">
+                        <a href="<?php echo home_url('/inquiry/'); ?>" class="hero-btn hero-btn-primary">
+                            <span>お問い合わせ</span>
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M7 4L13 10L7 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </a>
+                        <a href="<?php echo home_url('/case/'); ?>" class="hero-btn hero-btn-secondary">
+                            <span>実例を見る</span>
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M7 4L13 10L7 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
             </div>
         </section>
+
+        <style>
+        .hero-section {
+            position: relative;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            overflow: hidden;
+            background-color: linear-gradient(135deg, #FAF8F5 0%, #F5F0E8 100%);
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg,
+                rgba(212, 175, 55, 0.1) 0%,
+                rgba(255, 215, 0, 0.05) 50%,
+                rgba(212, 175, 55, 0.1) 100%);
+            z-index: 1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg,
+                rgba(0, 0, 0, 0.6) 0%,
+                rgba(0, 0, 0, 0.4) 50%,
+                rgba(0, 0, 0, 0.6) 100%);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .hero-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 20px;
+            letter-spacing: 0.1em;
+            line-height: 1.4;
+            text-shadow:
+                2px 2px 4px rgba(0, 0, 0, 0.5),
+                0 0 30px rgba(212, 175, 55, 0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(0.95rem, 2vw, 1.25rem);
+            color: #FFFFFF;
+            margin-bottom: 40px;
+            line-height: 1.8;
+            letter-spacing: 0.05em;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 1s ease-out 0.2s;
+            animation-fill-mode: both;
+        }
+
+        /* If no background image is set, use default styling */
+        .hero-section:not([style*="background-image"]) {
+            background: linear-gradient(135deg,
+                #FAF8F5 0%,
+                #F5F0E8 25%,
+                #FFF9F0 50%,
+                #F5F0E8 75%,
+                #FAF8F5 100%);
+        }
+
+        .hero-section:not([style*="background-image"]) .hero-title {
+            color: #2C2C2C;
+            text-shadow: none;
+            background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-section:not([style*="background-image"]) .hero-subtitle {
+            color: #666666;
+            text-shadow: none;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.4s;
+            animation-fill-mode: both;
+        }
+
+        .hero-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-btn-primary {
+            background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .hero-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+            color: white;
+        }
+
+        .hero-btn-secondary {
+            background: rgba(255, 255, 255, 0.95);
+            color: #D4AF37;
+            border: 2px solid #D4AF37;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-btn-secondary:hover {
+            background: #D4AF37;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .hero-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .hero-btn:hover::before {
+            left: 100%;
+        }
+
+        .hero-btn svg {
+            transition: transform 0.3s ease;
+        }
+
+        .hero-btn:hover svg {
+            transform: translateX(5px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Parallax effect on scroll */
+        @media (min-width: 768px) {
+            .hero-section {
+                min-height: 700px;
+                background-attachment: fixed;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .hero-section {
+                min-height: 500px;
+            }
+
+            .hero-content {
+                padding: 40px 15px;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-btn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+        }
+        </style>
 
         <!-- Services Section -->
         <section id="services" class="services-luxury-section">
